@@ -5,9 +5,5 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-/* Get Register page. */
-router.get('/register', function(req, res, next) {
-  res.render('donors/register', { title: 'register',layout : './layouts/signin' });
-});
 
 module.exports = router;
