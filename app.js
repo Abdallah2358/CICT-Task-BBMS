@@ -5,23 +5,32 @@ const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const { Sequelize } = require('sequelize');
+// const { Sequelize } = require('sequelize');
+const db = require("./models");
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 
 const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 
 // DB Connection
-const sequelize = new Sequelize('bbms', 'root', '', {
-  host: 'localhost',
-  dialect:  'mysql'
-});
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
+// const sequelize = new Sequelize('bbms', 'root', '', {
+//   host: 'localhost',
+//   dialect:  'mysql'
+// });
+// try {
+//   sequelize.authenticate();
+//   console.log('Connection has been established successfully.');
+// } catch (error) {
+//   console.error('Unable to connect to the database:', error);
+// }
 var app = express();
 
 // view engine setup
@@ -39,15 +48,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
