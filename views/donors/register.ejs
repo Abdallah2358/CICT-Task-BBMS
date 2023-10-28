@@ -1,22 +1,50 @@
-    <form>
-        <%- include('../components/logo') -%>
-            <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
+<main class="form-register w-100 m-auto">
+  <form method="post">
+    <%- include('../components/logo') -%>
+      <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
 
-            <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
-            </div>
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
+      <div class="form-floating m-2">
+        <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name">
+        <label for="fName">Full Name</label>
+      </div>
+      <div class="form-floating m-2">
+        <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID">
+        <label for="NID">National ID</label>
+      </div>
+      <div class="form-floating m-2 py-2">
+        <label for="City">City</label>
+        <select class="form-select" id="city" name="city">
+          <option value="0"></option>
+          <option value="1">Cairo</option>
+          <option value="2">Giza</option>
+          <option value="3">Alexandria</option>
+          <option value="4">Aswan</option>
+          <option value="5">Asyut</option>
+          <option value="6">Beheira</option>
+          <option value="7">Beni Suef</option>
+          <option value="8">Dakahlia</option>
+        </select>
+      </div>
 
-            <!-- <div class="checkbox mb-3">
+
+      <div class="form-floating m-2">
+        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+        <label for="email">Email address</label>
+      </div>
+      <!--
+      <div class="form-floating m-2">
+        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+        <label for="password">Password</label>
+      </div>
+
+      <div class="checkbox mb-3">
             <label>
               <input type="checkbox" value="remember-me"> Remember me
             </label>
-          </div> -->
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy;<%= new Date().getFullYear(); %>
-            </p>
-    </form>
+          </div> 
+        -->
+      <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
+      <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+      </p>
+  </form>
+</main>
