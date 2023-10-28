@@ -1,17 +1,36 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const { Sequelize } = require('sequelize');
 
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+// DB Connection
+const sequelize = new Sequelize('bbms', 'root', '', {
+  host: 'localhost',
+  dialect:  'mysql'
+});
+try {
+  sequelize.authenticate();
+  console.log('Connection has been established successfully.');
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+// use layout
+app.use(expressLayouts);
+
+app.set('layout', './layouts/full-width')
 
 app.use(logger('dev'));
 app.use(express.json());
