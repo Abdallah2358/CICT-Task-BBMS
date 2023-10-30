@@ -19,7 +19,7 @@ db.sequelize.sync()
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const usersRouter = require('./routes/users');
+const donorsRouter = require('./routes/donors');
 
 // DB Connection
 // const sequelize = new Sequelize('bbms', 'root', '', {
@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/users', usersRouter);
+app.use('/donors', donorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

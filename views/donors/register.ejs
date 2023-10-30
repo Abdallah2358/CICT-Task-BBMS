@@ -3,54 +3,59 @@
     <%- include('../components/logo') -%>
       <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
       <% if (errors) { %>
-      <ul class="text-start text-danger ">
-        <% for (const err of errors){ %>
-          <li class="">  <%= err.msg %></li>
+        <ul class="text-start text-danger ">
+          <% for (const err of errors){ %>
+            <li class="">
+              <%= err.msg %>
+            </li>
+            <% } %>
+        </ul>
         <% } %>
-      </ul>
-      <% } %>
-      <div class="form-floating m-2">
-        <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name" value="<%= user.fullName %>">
-        <label for="fName">Full Name</label>
-      </div>
-      <div class="form-floating m-2">
-        <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID" value="<%= user.NID %>">
-        <label for="NID">National ID</label>
-      </div>
-      <div class="form-floating m-2 py-2">
-        <label for="City">City</label>
-        <select class="form-select" id="city" name="city">
-          <option value=""></option>
-          <option value="1">Cairo</option>
-          <option value="2">Giza</option>
-          <option value="3">Alexandria</option>
-          <option value="4">Aswan</option>
-          <option value="5">Asyut</option>
-          <option value="6">Beheira</option>
-          <option value="7">Beni Suef</option>
-          <option value="8">Dakahlia</option>
-        </select>
-      </div>
+          <div class="form-floating m-2">
+            <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name"
+              value="<%= donor.fullName %>">
+            <label for="fName">Full Name</label>
+          </div>
+          <div class="form-floating m-2">
+            <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID"
+              value="<%= donor.NID %>">
+            <label for="NID">National ID</label>
+          </div>
+          <div class="form-floating m-2">
+            <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+              value="<%= donor.email %>">
+            <label for="email">Email address</label>
+          </div>
+          <div class="form-floating m-2 py-2">
+            <label for="City">City</label>
+            <select class="form-select" id="city" name="city">
+              <option value=""></option>
+              <option value="Cairo">Cairo</option>
+              <option value="Giza">Giza</option>
+              <option value="Alexandria">Alexandria</option>
+              <option value="Aswan">Aswan</option>
+              <option value="Asyut">Asyut</option>
+              <option value="Beheira">Beheira</option>
+              <option value="Beni Suef">Beni Suef</option>
+              <option value="Dakahlia">Dakahlia</option>
+            </select>
+          </div>
+          <div class="form-floating m-2 py-2">
+            <label for="City">Blood Type</label>
+            <select class="form-select" id="city" name="city">
+              <option value=""></option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+            </select>
+          </div>
 
-
-      <div class="form-floating m-2">
-        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" value="<%= user.email %>">
-        <label for="email">Email address</label>
-      </div>
-      <!--
-      <div class="form-floating m-2">
-        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-        <label for="password">Password</label>
-      </div>
-
-      <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Remember me
-            </label>
-          </div> 
-        -->
-      <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
-      <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
-      </p>
+          <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
+          <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+          </p>
   </form>
 </main>

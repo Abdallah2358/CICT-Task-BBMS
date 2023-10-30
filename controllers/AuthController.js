@@ -1,23 +1,23 @@
 //js
 const db = require('../models');
 const {  validationResult } = require('express-validator');
-const User = db.User;
+const Donor = db.Donor;
 
 const GetDonorsRegister = (req, res, next) => {
-    res.render('donors/register', { title: 'register', layout: './layouts/signin', errors: [] , user: {}});
+    res.render('donors/register', { title: 'register', layout: './layouts/signin', errors: [] , donor: {}});
 }
 const PostDonorsRegister = (req, res, next) => {
     const result = validationResult(req);
     // res.send(result);
     const { fName, NID, city, email } = req.body;
-    const user = User.build({
+    const donor = Donor.build({
         fullName: fName,
         NID: NID,
         city: city,
         email: email
     });
     if (result.isEmpty()) {
-        user.save();
+        donor.save();
         res.redirect("/auth/register");
     }
     const errors = result.array()
@@ -26,7 +26,7 @@ const PostDonorsRegister = (req, res, next) => {
         title: 'register',
         layout: './layouts/signin',
         errors: errors,
-        user: user
+        donor: donor
     });
 
 

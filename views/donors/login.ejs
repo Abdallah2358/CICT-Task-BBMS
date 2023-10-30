@@ -1,0 +1,28 @@
+<main class="form-register w-100 m-auto">
+    <form method="post">
+        <%- include('../components/logo') -%>
+            <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
+            <% if (errors) { %>
+                <ul class="text-start text-danger ">
+                    <% for (const err of errors){ %>
+                        <li class="">
+                            <%= err.msg %>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } %>
+            <div class="form-floating m-2">
+                <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+                    value="<%= donor.email %>">
+                <label for="email">Email address</label>
+            </div>
+            <div class="form-floating m-2">
+                <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID"
+                    value="<%= donor.NID %>">
+                <label for="NID">National ID</label>
+            </div>
+            <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
+            <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+            </p>
+    </form>
+</main>

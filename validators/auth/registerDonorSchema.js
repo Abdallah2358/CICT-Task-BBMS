@@ -1,20 +1,20 @@
 const db = require('../../models');
-const User = db.User;
+const Donor = db.Donor;
 
 const checkEmailNotInUse = async (value) => {
-    const user = await User.findOne({ where: { email: value } });
-    if (user) {
+    const donor = await Donor.findOne({ where: { email: value } });
+    if (donor) {
         throw new Error('E-mail already in use');
     }
 };
 const checkNIDNotInUse = async (value) => {
-    const user = await User.findOne({ where: { NID: value } });
-    if (user) {
+    const donor = await Donor.findOne({ where: { NID: value } });
+    if (donor) {
         throw new Error('National Id already in exist');
     }
 };
 module.exports = {
-    registerSchema: {
+    registerDonorSchema: {
         fName: { notEmpty: { errorMessage: 'Name is required' }, },
         NID: {
             notEmpty: { errorMessage: 'National Id is required', bail: true },
