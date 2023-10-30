@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const db = require('../models');
 const { validationResult } = require('express-validator');
 const Donor = db.Donor;
+const DonationRequest = db.DonationRequest;
 const transport = nodemailer.createTransport({
     host: "sandbox.smtp.mailtrap.io",
     port: 2525,
@@ -18,8 +19,14 @@ const PostDonorsRegister = async (req, res, next) => {
     const result = validationResult(req);
     const donor = Donor.build(req.body);
     if (result.isEmpty()) {
-        donor.save();
-      await  transport.sendMail({
+        await donor.save();
+       const dr=  await DonationRequest.create({
+            donor_id: donor.NID,
+            blood_type: donor.blood_type,
+            status: "pending",
+        })
+        // res.send({ dr, result: result.array() });
+        await transport.sendMail({
             from: "no-reply@bbms.eg",
             to: donor.email,
             subject: "Welcome to BBMS",
