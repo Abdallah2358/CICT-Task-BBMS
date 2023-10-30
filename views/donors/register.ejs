@@ -2,19 +2,25 @@
   <form method="post">
     <%- include('../components/logo') -%>
       <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
-
+      <% if (errors) { %>
+      <ul class="text-start text-danger ">
+        <% for (const err of errors){ %>
+          <li class="">  <%= err.msg %></li>
+        <% } %>
+      </ul>
+      <% } %>
       <div class="form-floating m-2">
-        <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name">
+        <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name" value="<%= user.fullName %>">
         <label for="fName">Full Name</label>
       </div>
       <div class="form-floating m-2">
-        <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID">
+        <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID" value="<%= user.NID %>">
         <label for="NID">National ID</label>
       </div>
       <div class="form-floating m-2 py-2">
         <label for="City">City</label>
         <select class="form-select" id="city" name="city">
-          <option value="0"></option>
+          <option value=""></option>
           <option value="1">Cairo</option>
           <option value="2">Giza</option>
           <option value="3">Alexandria</option>
@@ -28,7 +34,7 @@
 
 
       <div class="form-floating m-2">
-        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com" value="<%= user.email %>">
         <label for="email">Email address</label>
       </div>
       <!--
