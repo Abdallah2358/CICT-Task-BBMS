@@ -12,9 +12,9 @@
         </ul>
         <% } %>
           <div class="form-floating m-2">
-            <input name="fName" type="text" class="form-control" id="fName" placeholder="Full Name"
-              value="<%= donor.fullName %>">
-            <label for="fName">Full Name</label>
+            <input name="full_name" type="text" class="form-control" id="full_name" placeholder="Full Name"
+              value="<%= donor.full_name %>">
+            <label for="full_name">Full Name</label>
           </div>
           <div class="form-floating m-2">
             <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID"
@@ -26,32 +26,44 @@
               value="<%= donor.email %>">
             <label for="email">Email address</label>
           </div>
-          <div class="form-floating m-2 py-2">
-            <label for="City">City</label>
-            <select class="form-select" id="city" name="city">
-              <option value=""></option>
-              <option value="Cairo">Cairo</option>
-              <option value="Giza">Giza</option>
-              <option value="Alexandria">Alexandria</option>
-              <option value="Aswan">Aswan</option>
-              <option value="Asyut">Asyut</option>
-              <option value="Beheira">Beheira</option>
-              <option value="Beni Suef">Beni Suef</option>
-              <option value="Dakahlia">Dakahlia</option>
-            </select>
-          </div>
-          <div class="form-floating m-2 py-2">
-            <label for="City">Blood Type</label>
-            <select class="form-select" id="city" name="city">
-              <option value=""></option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-            </select>
+          <!-- <div class="form-floating m-2">
+            <input name="phone" type="text" class="form-control" id="phone" placeholder="01234567890"
+              value="<%= donor.phone %>">
+            <label for="phone">Phone Number</label>
+          </div> -->
+          <!-- <div class="form-floating m-2">
+            <input name="password" type="password" class="form-control" id="password" placeholder="****"
+              value="<%= donor.password %>">
+            <label for="password">Password</label>
+          </div> -->
+
+          <div class="row justify-content-between">
+            <div class="col-5 m-2">
+              <select class="form-select" id="city" name="city">
+                <option value="" selected disabled>Select City</option>
+                <option value="Cairo">Cairo</option>
+                <option value="Giza">Giza</option>
+                <option value="Alexandria">Alexandria</option>
+                <option value="Aswan">Aswan</option>
+                <option value="Asyut">Asyut</option>
+                <option value="Beheira">Beheira</option>
+                <option value="Beni Suef">Beni Suef</option>
+                <option value="Dakahlia">Dakahlia</option>
+              </select>
+            </div>
+            <div class="col-5 m-2">
+              <select class="form-select" id="blood_type" name="blood_type">
+                <option selected disabled value="">Select Blood Type</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
           </div>
 
           <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>

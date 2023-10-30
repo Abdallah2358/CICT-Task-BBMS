@@ -14,10 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Donor.init({
-    fullName: DataTypes.STRING,
+    full_name: DataTypes.STRING,
     email: DataTypes.STRING,
     city:DataTypes.STRING,
-    NID:DataTypes.STRING,
+    NID:{
+      type : DataTypes.STRING,
+      primaryKey : true,
+      allowNull : false,
+    },
+    blood_type:DataTypes.ENUM('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'),
   }, {
     sequelize,
     modelName: 'Donor',

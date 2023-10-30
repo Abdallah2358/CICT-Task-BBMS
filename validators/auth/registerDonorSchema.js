@@ -15,7 +15,7 @@ const checkNIDNotInUse = async (value) => {
 };
 module.exports = {
     registerDonorSchema: {
-        fName: { notEmpty: { errorMessage: 'Name is required' }, },
+        full_name: { notEmpty: { errorMessage: 'Name is required' }, },
         NID: {
             notEmpty: { errorMessage: 'National Id is required', bail: true },
             isLength: { options: { min: 9, max: 9 }, errorMessage: 'National Id must be 9 digits', },
@@ -27,6 +27,14 @@ module.exports = {
             notEmpty: { errorMessage: "Email is Required" },
             isEmail: { errorMessage: "Invalid Email" },
             custom: { options: checkEmailNotInUse },
+        },
+        blood_type: {
+            notEmpty: { errorMessage: 'Blood Type is required' },
+            // isIn: {
+            //     values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+            //     errorMessage: 'Blood Type must be one of the following values '
+            //         + '[A+, A-, B+, B-, AB+, AB-, O+, O-]',
+            // }
         },
     }
 };

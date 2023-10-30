@@ -15,7 +15,7 @@ module.exports = {
       //   primaryKey: true,
       //   type: Sequelize.INTEGER
       // },
-      fullName: {
+      full_name: {
         type: Sequelize.STRING
       },
       email: {
@@ -23,6 +23,10 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING
+      },
+      blood_type: {
+        type: Sequelize.ENUM  ,
+        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] 
       },
       createdAt: {
         allowNull: false,
