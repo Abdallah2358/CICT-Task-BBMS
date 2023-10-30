@@ -1,21 +1,35 @@
 //js
 const db = require('../models');
+const {  validationResult } = require('express-validator');
 const User = db.User;
-const GetRegister = (req, res,next) => {
-    res.render('donors/register', { title: 'register', layout: './layouts/signin' });
+
+const GetDonorsRegister = (req, res, next) => {
+    res.render('donors/register', { title: 'register', layout: './layouts/signin', errors: [] , user: {}});
 }
-const PostRegister = (req, res , next) => {
+const PostDonorsRegister = (req, res, next) => {
+    const result = validationResult(req);
+    // res.send(result);
     const { fName, NID, city, email } = req.body;
-    User .create({
+    const user = User.build({
         fullName: fName,
         NID: NID,
         city: city,
         email: email
     });
-    // console.log(fName, NID, city, email);
-    // res.render('donors/register', { title: 'register', layout: './layouts/signin' });
+    if (result.isEmpty()) {
+        user.save();
+        res.redirect("/auth/register");
+    }
+    const errors = result.array()
+    // res.send(errors);
+    res.render('donors/register', {
+        title: 'register',
+        layout: './layouts/signin',
+        errors: errors,
+        user: user
+    });
 
-    res.redirect("/auth/register");
+
 }
 
 const GetLogin = (req, res) => {
@@ -24,7 +38,7 @@ const GetLogin = (req, res) => {
     });
 }
 module.exports = {
-    GetRegister,
-    PostRegister,
+    GetDonorsRegister,
+    PostDonorsRegister,
     GetLogin,
 };
