@@ -1,4 +1,4 @@
-const db = require('../../models');
+const db = require('../../database/models');
 const Donor = db.Donor;
 
 const checkEmailNotInUse = async (value) => {
