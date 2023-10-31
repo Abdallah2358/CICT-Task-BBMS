@@ -40,7 +40,7 @@ app.set('view engine', 'ejs');
 // use layout
 app.use(expressLayouts);
 
-app.set('layout', './layouts/full-width')
+app.set('layout', './layouts/dashboard')
 
 app.use(logger('dev'));
 app.use(express.json());
