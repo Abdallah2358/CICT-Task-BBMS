@@ -1,0 +1,22 @@
+<h1>Donation Request #<%= request.id %>
+</h1>
+<p>
+    <span>Donor Id:</span>
+    <a href="/donor/<%= request.donor_id %>">
+        <%= request.donor_id %>
+    </a>
+</p>
+
+<p>Blood Type : <%= request.blood_type %>
+</p>
+<p>Status : <%= request.status %>
+</p>
+<p>Virus Test : <%= request.test_result %>
+</p>
+
+<p>Approved Donation Id : <a href="/donation  /<%= request.donation_id %>">
+        <%= request.donation_id %>
+    </a> </p>
+<a href="/donation-request/">&lt- back</a>
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

@@ -1,0 +1,44 @@
+<h2>Donation Requests</h2>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Donor Id</th>
+                <th scope="col">Blood Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Virus Test</th>
+                <th scope="col">Donation Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%  donation_requests.forEach(dr=> { %>
+
+                <tr>
+                    <td>
+                       <a  class="link text-dark" href="/donation-request/<%= dr.id %>"><%= dr.id %></a> 
+                    </td>
+                    <td>
+                        <a class="link text-dark" href="/donor/<%= dr.donor_id %>"><%= dr.donor_id %></a> 
+                    </td>
+                    <td>
+                        <%= dr.blood_type %>
+                    </td>
+                    <td>
+                        <%= dr.status %>
+                    </td>
+                    <td>
+                        <%= dr.test_result %>
+                    </td>
+                    <td>
+                        <%= dr.donation_id %>
+                    </td>
+                </tr>
+                <% }); %>
+
+        </tbody>
+    </table>
+</div>
+
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

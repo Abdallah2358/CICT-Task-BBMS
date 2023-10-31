@@ -8,13 +8,13 @@ const logger = require('morgan');
 const session = require('express-session');
 // const { Sequelize } = require('sequelize');
 const db = require("./database/models");
-db.sequelize.sync()
-  .then(() => {
-    console.log("Synced db.");
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-  });
+// db.sequelize.sync()
+//   .then(() => {
+//     console.log("Synced db.");
+//   })
+//   .catch((err) => {
+//     console.log("Failed to sync db: " + err.message);
+//   });
 
 
 const indexRouter = require('./routes/index');
