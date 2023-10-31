@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../database/models');
 const { validationResult } = require('express-validator');
 const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;

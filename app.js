@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 // const { Sequelize } = require('sequelize');
-const db = require("./models");
+const db = require("./database/models");
 db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
@@ -20,6 +20,7 @@ db.sequelize.sync()
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const donorsRouter = require('./routes/donors');
+const donationRequestRouter = require('./routes/donation_request');
 
 // DB Connection
 // const sequelize = new Sequelize('bbms', 'root', '', {
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/donors', donorsRouter);
+app.use('/donation-request', donationRequestRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
