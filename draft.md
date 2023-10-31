@@ -2,8 +2,9 @@ we got 3 users of the system
 - donors use it to 
   - register their personal info
   - apply for donation
+    - if user already has a pending donation req -> he is redirect to this donation-request
   - check donation status
-- Blood banks use it to
+- Blood banks moderator use it to
   - approve/reject virus test 
     -  if accepted and time from last donation > 3 m  send mail to user increase stock by 1 after 1 day update user's last donation date to after approval by 1 day
     - else send mail to user 
