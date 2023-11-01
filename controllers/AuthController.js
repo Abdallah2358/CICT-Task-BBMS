@@ -11,6 +11,7 @@ const PostDonorsRegister = async (req, res, next) => {
     const result = validationResult(req);
     const donor = Donor.build(req.body);
     if (result.isEmpty()) {
+        await donor.save();
         const dr = await DonationRequest.create({
             donor_id: donor.NID,
             blood_type: donor.blood_type,
@@ -24,19 +25,16 @@ const PostDonorsRegister = async (req, res, next) => {
             html: "<h1>Thank you for registering</h1>"
                 + "<h2>you donation is pending approval</h2>",
         });
-        await donor.save();
-        res.redirect("/auth/donor/register");
+        return res.redirect("/auth/donor/register");
     }
     const errors = result.array()
     // res.send({ errors, reqBody: req.body });
-    res.render('donors/register', {
+    return res.render('donors/register', {
         title: 'register',
         layout: './layouts/signin',
         errors: errors,
         donor: donor
     });
-
-
 }
 
 const GetLogin = (req, res) => {

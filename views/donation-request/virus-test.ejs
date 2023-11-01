@@ -1,0 +1,17 @@
+<h1>Virus Test Request of Donation Request #<%= id %>
+</h1>
+
+<form method="post" action="/donation-request/<%= id %>/virus-test-result">
+    <p>Virus Test Result</p>
+    <select name="test_result" id="test_result">
+        <option value="" disabled selected>Pending</option>
+        <option value="0">Negative</option>
+        <option value="1">Positive</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+
+
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

@@ -12,14 +12,18 @@
             </tr>
         </thead>
         <tbody>
-            <%  donation_requests.forEach(dr=> { %>
+            <% donation_requests.forEach(dr=> { %>
 
                 <tr>
                     <td>
-                       <a  class="link text-dark" href="/donation-request/<%= dr.id %>"><%= dr.id %></a> 
+                        <a class="link text-dark" href="/donation-request/<%= dr.id %>">
+                            <%= dr.id %>
+                        </a>
                     </td>
                     <td>
-                        <a class="link text-dark" href="/donor/<%= dr.donor_id %>"><%= dr.donor_id %></a> 
+                        <a class="link text-dark" href="/donor/<%= dr.donor_id %>">
+                            <%= dr.donor_id %>
+                        </a>
                     </td>
                     <td>
                         <%= dr.blood_type %>
@@ -28,7 +32,11 @@
                         <%= dr.status %>
                     </td>
                     <td>
-                        <%= dr.test_result %>
+                        <% if (!dr.test_result ) { %>
+                            <a class="link text-info" href="/donation-request/<%= dr.id %>/virus-test-result">pending</a>
+                            <% } else { %>
+                                <%= dr.test_result %>
+                                    <% } %>
                     </td>
                     <td>
                         <%= dr.donation_id %>
