@@ -1,0 +1,23 @@
+<main class="form-register w-100 m-auto">
+    <form method="post">
+        <%- include('../partials/logo.ejs') -%>
+            <h1 class="h3 mb-3 fw-normal">Please Enter Your National Id</h1>
+            <% if (errors) { %>
+                <ul class="text-start text-danger ">
+                    <% for (const err of errors){ %>
+                        <li class="">
+                            <%= err.msg %>
+                        </li>
+                    <% } %>
+                </ul>
+            <% } %>
+            <div class="form-floating m-2">
+                <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID"
+                    value="<%= donor.NID %>">
+                <label for="NID">National ID</label>
+            </div>
+            <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
+            <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+            </p>
+    </form>
+</main>

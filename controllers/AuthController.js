@@ -16,6 +16,7 @@ const PostDonorsRegister = async (req, res, next) => {
             donor_id: donor.NID,
             blood_type: donor.blood_type,
             status: "pending",
+            test_result: "pending",
         })
         // res.send({ dr, result: result.array() });
         await transport.sendMail({

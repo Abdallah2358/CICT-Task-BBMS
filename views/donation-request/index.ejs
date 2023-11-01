@@ -32,11 +32,17 @@
                         <%= dr.status %>
                     </td>
                     <td>
-                        <% if (!dr.test_result ) { %>
-                            <a class="link text-info" href="/donation-request/<%= dr.id %>/virus-test-result">pending</a>
+                        <% if (dr.test_result!='pending' ) { %>
+                            <% if (dr.test_result=='negative') { %>
+                                <span class="text-success ">Negative</span>
                             <% } else { %>
-                                <%= dr.test_result %>
-                                    <% } %>
+                                <span class="text-danger ">Positive</span>
+                            <% } %>
+
+                        <% } else { %>
+                            <a class="link text-info"
+                                href="/donation-request/<%= dr.id %>/virus-test-result">pending</a>
+                        <% } %>
                     </td>
                     <td>
                         <%= dr.donation_id %>
