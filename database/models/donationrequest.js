@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.ENUM('pending', 'accepted', 'rejected'),
     },
+    test_result: {
+      type: DataTypes.ENUM('pending', 'positive', 'negative'),
+    },
     donation_id: {
       type: DataTypes.INTEGER,
       references: {
