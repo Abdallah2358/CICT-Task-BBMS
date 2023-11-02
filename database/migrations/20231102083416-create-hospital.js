@@ -2,26 +2,18 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Donations', {
+    await queryInterface.createTable('Hospitals', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      donor_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Donors',
-          key: 'national_id',
-        }
+      name: {
+        type: Sequelize.STRING
       },
-      blood_type_id: {
-        type: Sequelize.SMALLINT  ,
-        references: {
-          model: 'BloodTypes',
-          key: 'id',
-        }
+      city_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Donations');
+    await queryInterface.dropTable('Hospitals');
   }
 };

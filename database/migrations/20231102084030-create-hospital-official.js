@@ -2,35 +2,42 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('DonationRequests', {
+    await queryInterface.createTable('HospitalOfficials', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      donor_id: {
-        type: Sequelize.STRING,
-        references: {
-          model: 'Donors',
-          key: 'NID',
-        }
-      },
-      blood_type: {
+      national_id: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
-      status: {
-        type: Sequelize.ENUM('pending', 'accepted', 'rejected'),
+      username: {
+        type: Sequelize.STRING
       },
-      test_result: {
-        type: Sequelize.ENUM('pending', 'positive', 'negative'),
+      full_name: {
+        type: Sequelize.STRING
       },
-      donation_id: {
-        type: Sequelize.INTEGER,
+      password: {
+        type: Sequelize.STRING
+      },
+      email: {
+        type: Sequelize.STRING
+      },
+      title: {
+        type: Sequelize.STRING
+      },
+      blood_type_id: {
+        type: Sequelize.SMALLINT  ,
         references: {
-          model: 'Donations',
+          model: 'BloodTypes',
           key: 'id',
         }
+      },
+      hospital_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('DonationRequests');
+    await queryInterface.dropTable('HospitalOfficials');
   }
 };

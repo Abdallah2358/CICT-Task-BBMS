@@ -2,32 +2,18 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Donors', {
+    await queryInterface.createTable('BloodRequests', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      national_id: {
-        allowNull: false,
-        unique: true,
-        type: Sequelize.STRING
+      hospital_id: {
+        type: Sequelize.INTEGER
       },
-      full_name: {
-        type: Sequelize.STRING
-      },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      password :{
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      city: {
-        allowNull: false,
-        type: Sequelize.STRING
+      patient_state: {
+        type: Sequelize.ENUM
       },
       blood_type_id: {
         type: Sequelize.SMALLINT  ,
@@ -35,6 +21,9 @@ module.exports = {
           model: 'BloodTypes',
           key: 'id',
         }
+      },
+      city_id: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -47,6 +36,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Donors');
+    await queryInterface.dropTable('BloodRequests');
   }
 };
+official
