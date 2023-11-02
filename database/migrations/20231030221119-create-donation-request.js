@@ -17,7 +17,7 @@ module.exports = {
         }
       },
       blood_type_id: {
-        type: Sequelize.SMALLINT  ,
+        type: Sequelize.SMALLINT,
         references: {
           model: 'BloodTypes',
           key: 'id',
@@ -33,6 +33,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Donations',
+          key: 'id',
+        }
+      },
+      accepted_by_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Admins',
           key: 'id',
         }
       },

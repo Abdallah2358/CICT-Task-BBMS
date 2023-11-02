@@ -15,25 +15,29 @@ module.exports = (sequelize, DataTypes) => {
   }
   DonationRequest.init({
     donor_id: {
-      type: DataTypes.STRING,
-      // references: {
-      //   model: 'Donor',
-      //   key: 'NID',
-      // }
-    },
-    blood_type: {
-      type: DataTypes.STRING
-    },
-    status: {
-      type: DataTypes.ENUM('pending', 'accepted', 'rejected'),
-    },
-    test_result: {
-      type: DataTypes.ENUM('pending', 'positive', 'negative'),
-    },
-    donation_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Donation',
+        model: 'Donor',
+        key: 'id',
+      }
+    },
+    blood_type_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'BloodType',
+        key: 'id',
+      }
+    },
+    status: {
+      type: DataTypes.ENUM('Pending', 'Accepted', 'Rejected'),
+    },
+    test_result: {
+      type: DataTypes.ENUM('Pending', 'Positive', 'Negative'),
+    },
+    accepted_by_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Admins',
         key: 'id',
       }
     },
