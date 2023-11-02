@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Donors',
-          key: 'national_id',
+          key: 'id',
         }
       },
       blood_type_id: {
@@ -24,10 +24,10 @@ module.exports = {
         }
       },
       status: {
-        type: Sequelize.ENUM('pending', 'accepted', 'rejected'),
+        type: Sequelize.ENUM('Pending', 'Accepted', 'Rejected'),
       },
       test_result: {
-        type: Sequelize.ENUM('pending', 'positive', 'negative'),
+        type: Sequelize.ENUM('Pending', 'Positive', 'Negative'),
       },
       donation_id: {
         type: Sequelize.INTEGER,

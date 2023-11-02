@@ -13,15 +13,20 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Donors',
-          key: 'national_id',
+          key: 'id',
         }
       },
       blood_type_id: {
-        type: Sequelize.SMALLINT  ,
+        type: Sequelize.SMALLINT,
         references: {
           model: 'BloodTypes',
           key: 'id',
         }
+      },
+      in_stock: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +37,15 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.addIndex(
+      'Donations',
+      ['in_stock'],
+      {
+        indicesType: 'BTREE',
+        where: { bool: 'true' },
+      }
+    );
+
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Donations');

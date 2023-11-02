@@ -30,14 +30,18 @@ module.exports = {
         type: Sequelize.STRING
       },
       blood_type_id: {
-        type: Sequelize.SMALLINT  ,
+        type: Sequelize.SMALLINT,
         references: {
           model: 'BloodTypes',
           key: 'id',
         }
       },
       hospital_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Hospitals',
+          key: 'id',
+        }
       },
       createdAt: {
         allowNull: false,

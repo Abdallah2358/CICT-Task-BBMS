@@ -10,10 +10,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       hospital_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Hospitals',
+          key: 'id',
+        }
       },
       patient_state: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM,
+        values: ['Immediate', 'Urgent', 'Normal'],
       },
       blood_type_id: {
         type: Sequelize.SMALLINT  ,
@@ -23,7 +28,11 @@ module.exports = {
         }
       },
       city_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Cities',
+          key: 'id',
+        }
       },
       createdAt: {
         allowNull: false,
@@ -39,4 +48,3 @@ module.exports = {
     await queryInterface.dropTable('BloodRequests');
   }
 };
-official
