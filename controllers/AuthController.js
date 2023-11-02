@@ -13,8 +13,8 @@ const PostDonorsRegister = async (req, res, next) => {
     if (result.isEmpty()) {
         await donor.save();
         const dr = await DonationRequest.create({
-            donor_id: donor.NID,
-            blood_type: donor.blood_type,
+            donor_id: donor.national_id,
+            blood_type_id: donor.blood_type_id,
             status: "pending",
             test_result: "pending",
         })

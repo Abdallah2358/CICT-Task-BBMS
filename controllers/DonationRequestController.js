@@ -35,12 +35,12 @@ const store = async (req, res, next) => {
         });
 
     }
-    const donor = await Donor.findOne({ where: { NID: req.body.NID } });
+    const donor = await Donor.findOne({ where: { national_id: req.body.national_id } });
     if (!donor) {
         // res.send('aaa')
         return res.redirect('/auth/donor/register');
     }
-    const last_donation_request = await DonationRequest.findOne({ where: { donor_id: donor.NID }, order: [['createdAt', 'DESC']] });
+    const last_donation_request = await DonationRequest.findOne({ where: { donor_id: donor.national_id }, order: [['createdAt', 'DESC']] });
     if (last_donation_request && last_donation_request.status == "pending") {
         return res.render('donation-request/create',
             {
@@ -49,7 +49,7 @@ const store = async (req, res, next) => {
                 donor: donor
             });
     }
-    const last_donation = await Donation.findOne({ where: { donor_id: donor.NID }, order: [['createdAt', 'DESC']] });
+    const last_donation = await Donation.findOne({ where: { donor_id: donor.national_id }, order: [['createdAt', 'DESC']] });
     if (can_donate((new Date()).toISOString(), last_donation?.createdAt)) {
         await transport.sendMail({
             from: "no-reply@bbms.eg",
@@ -59,8 +59,8 @@ const store = async (req, res, next) => {
                 + "<h2>you donation is pending approval of virus test</h2>",
         });
         const dr = await DonationRequest.create({
-            donor_id: donor.NID,
-            blood_type: donor.blood_type,
+            donor_id: donor.national_id,
+            blood_type_id: donor.blood_type_id,
             status: "pending",
             test_result: "pending",
         });
@@ -91,7 +91,7 @@ const post_test_result = async (req, res) => {
     // res.send('aaa')
     const dr = await DonationRequest.findOne({ where: { id: req.params.id } });
     const lastDonation = await Donation.findOne({ where: { donor_id: dr.donor_id }, order: [['createdAt', 'DESC']] });
-    const donor = await Donor.findOne({ where: { NID: dr.donor_id } });
+    const donor = await Donor.findOne({ where: { national_id: dr.donor_id } });
     if (req.body.test_result == 'negative' && can_donate(dr.createdAt, lastDonation?.createdAt)) {
         dr.status = "accepted";
         dr.test_result = req.body.test_result;
@@ -103,8 +103,8 @@ const post_test_result = async (req, res) => {
                 + "<h2>Thanks for helping save lives </h2>",
         });
         const donation = await Donation.create({
-            donor_id: donor.NID,
-            blood_type: donor.blood_type,
+            donor_id: donor.national_id,
+            blood_type_id: donor.blood_type_id,
         });
         dr.donation_id = donation.id;
         // res.send({ donation: donation })
