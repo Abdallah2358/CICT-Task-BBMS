@@ -17,6 +17,11 @@ npx sequelize-cli model:generate --name <model name> --attributes <attribute_1_n
 - please follow restful api best practice like `./controllers/TemplateController.js`
 
 ## Create Router 
-- create a new file at `./routers`
+- - create a new file at `./routers`
 - your router name should be lower case 
-- please follow restful best practices like template
+- please follow restful best practices like template `./routes/template.js`
+- import your controller and start using it
+- if you you want to add validation there will be another document on this topic
+## Create Views
+- create a new file at `./views` 
+- the file name should be  the action that renders it  
