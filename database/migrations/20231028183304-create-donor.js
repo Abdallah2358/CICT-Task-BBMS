@@ -21,16 +21,20 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      password :{
+      password: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      city: {
+      city_id: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Cities',
+          key: 'id',
+        }
       },
       blood_type_id: {
-        type: Sequelize.SMALLINT  ,
+        type: Sequelize.SMALLINT,
         references: {
           model: 'BloodTypes',
           key: 'id',
