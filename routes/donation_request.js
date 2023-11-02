@@ -7,7 +7,7 @@ router.get('/', DRC.index);
 router.get('/create', DRC.create);
 router.post('/create', checkSchema(
     {
-        NID: {
+        national_id: {
             in: ['body'],
             errorMessage: 'National Id is required',
             isInt: true,

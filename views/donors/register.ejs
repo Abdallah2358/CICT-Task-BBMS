@@ -17,9 +17,9 @@
             <label for="full_name">Full Name</label>
           </div>
           <div class="form-floating m-2">
-            <input name="NID" type="text" class="form-control" id="NID" placeholder="National ID"
-              value="<%= donor.NID %>">
-            <label for="NID">National ID</label>
+            <input name="national_id" type="text" class="form-control" id="national_id" placeholder="National ID"
+              value="<%= donor.national_id %>">
+            <label for="national_id">National ID</label>
           </div>
           <div class="form-floating m-2">
             <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
@@ -52,7 +52,7 @@
               </select>
             </div>
             <div class="col-5 m-2">
-              <select class="form-select" id="blood_type" name="blood_type">
+              <select class="form-select" id="blood_type_id" name="blood_type_id">
                 <option selected disabled value="">Select Blood Type</option>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
