@@ -13,7 +13,7 @@ router.get('/edit', TRC.edit);
 
 router.post('/store', TRC.store);
 router.post('/update', TRC.update);
-router.delete('/delete', TRC.deleteAction);
 
+router.delete('/delete', TRC.deleteAction);
 
 module.exports = router;
