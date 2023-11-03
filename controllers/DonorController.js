@@ -56,7 +56,7 @@ const PostRegister = async (req, res, next) => {
 
 const Login = (req, res, next) => {
     // res.send('aaa');
-    
+
     return res.render('donor/login',
         {
             title: 'Donor Register',
@@ -66,8 +66,13 @@ const Login = (req, res, next) => {
         });
 }
 const PostLogin = (req, res) => {
-    res.render("donor/login", {
-    });
+    return res.render('donor/login',
+        {
+            title: 'Donor Register',
+            layout: './layouts/sign-in',
+            errors: [], donor: {},
+            // cities: cities, blood_types: blood_types
+        });
 }
 module.exports = {
     Register,

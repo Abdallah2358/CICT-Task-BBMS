@@ -1,28 +1,65 @@
 <main class="form-register w-100 m-auto">
-    <form method="post">
+    <form method="post" id="login-form">
         <%- include('../partials/logo') -%>
-        <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
+            <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
             <% if (errors) { %>
                 <ul class="text-start text-danger ">
                     <% for (const err of errors){ %>
                         <li class="">
                             <%= err.msg %>
                         </li>
-                    <% } %>
+                        <% } %>
                 </ul>
-            <% } %>
-            <div class="form-floating m-2">
-                <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
-                    value="<%= donor.email %>">
-                <label for="email">Email address</label>
-            </div>
-            <div class="form-floating m-2">
-                <input name="password" type="text" class="form-control" id="password" placeholder="National ID"
-                    value="<%= donor.password %>">
-                <label for="password">Password</label>
-            </div>
-            <button class="w-50 btn btn-lg btn-secondary " type="submit">Login</button>
-            <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
-            </p>
+                <% } %>
+                    <div class="form-floating m-2">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+                            value="<%= donor.email %>">
+                        <label for="email">Email address</label>
+                    </div>
+                    <div class="form-floating m-2">
+                        <input name="password" type="password" class="form-control" id="password"
+                            placeholder="National ID" value="<%= donor.password %>">
+                        <label for="password">Password</label>
+                    </div>
+                    <button class="w-50 btn btn-lg btn-secondary " type="submit">Login</button>
+                    <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+                    </p>
     </form>
 </main>
+<script defer>
+    const loginForm = document.getElementById('login-form');
+    const email = getCookie('email');
+    const password = getCookie('password');
+    const errors = JSON.parse('<%-JSON.stringify(errors)%>');
+    // console.log(!errors.length);
+    if (email && password && !errors.length) {
+        document.getElementById('email').value = email;
+        document.getElementById('password').value = password;
+        console.log("hey");
+
+        loginForm.submit();
+    }
+    loginForm.addEventListener('submit', (e) => {
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+        document.cookie = `email=${email}`;
+        document.cookie = `password=${password}`;
+        console.log("hey");
+    });
+
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
