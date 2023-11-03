@@ -41,7 +41,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.City.hasMany(db.Hospital, { foreignKey: 'city_id' });
-db.City.hasMany(db.Donor, { foreignKey: 'city' });
+db.City.hasMany(db.Donor, { foreignKey: 'city_id' });
 db.City.hasMany(db.BloodRequest, { foreignKey: 'city_id' });
 
 db.BloodType.hasMany(db.Donor, { foreignKey: 'blood_type_id' });
@@ -53,7 +53,7 @@ db.BloodType.hasMany(db.BloodRequest, { foreignKey: 'blood_type_id' });
 
 db.Donor.hasMany(db.Donation, { foreignKey: 'donor_id' });
 db.Donor.hasMany(db.DonationRequest, { foreignKey: 'donor_id' });
-db.Donor.belongsTo(db.City, { foreignKey: 'city' });
+db.Donor.belongsTo(db.City, { foreignKey: 'city_id' });
 db.Donor.belongsTo(db.BloodType, { foreignKey: 'blood_type_id' });
 
 db.Donation.belongsTo(db.Donor, { foreignKey: 'donor_id' });
