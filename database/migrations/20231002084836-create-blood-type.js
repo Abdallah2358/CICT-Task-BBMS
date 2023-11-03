@@ -14,13 +14,22 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+
       }
     });
+    await queryInterface.bulkInsert('BloodTypes',
+      [
+        { name: 'A+' }, { name: 'A-' }, { name: 'B+' }, { name: 'B-' },
+        { name: 'AB+' }, { name: 'AB-' }, { name: 'O+' }, { name: 'O-' }
+      ]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('BloodTypes');
