@@ -2,6 +2,14 @@ const db = require('../database/models');
 const { validationResult } = require('express-validator');
 const { transport, Cities, Blood_types } = require('../config');
 const app = require('../app');
+
+
+const { createHash } = require('crypto');
+
+function hash(string) {
+  return createHash('sha256').update(string).digest('hex');
+}
+
 const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;
 const City = db.City;
@@ -23,6 +31,8 @@ const PostRegister = async (req, res, next) => {
     const blood_types = await Blood_types;
     const result = validationResult(req);
     const donor = Donor.build(req.body);
+    donor.password = hash(donor.password);
+
     // res.send(result.array());
     if (result.isEmpty()) {
         await donor.save();
@@ -40,6 +50,7 @@ const PostRegister = async (req, res, next) => {
             html: "<h1>Thank you for registering</h1>"
                 + "<h2>you donation is pending approval</h2>",
         });
+        req.session.donor = donor;
         return res.redirect("/");
     }
     const errors = result.array()
@@ -71,7 +82,8 @@ const Login = async (req, res, next) => {
         });
 }
 const PostLogin = async (req, res) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    password = hash(password);
     const donor = await Donor.findOne({ where: { email: email, password: password } });
     if (donor) {
         req.session.donor = donor;
