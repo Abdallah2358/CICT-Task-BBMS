@@ -45,6 +45,10 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+    await queryInterface.bulkInsert('BloodTypes',
+      [
+        { national_id: '123456789', username: 'admin1', full_name: 'admin1', password: 'password', email: 'admin@example.com', title: 'Manager', blood_type_id: 1 },
+      ]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Admins');
