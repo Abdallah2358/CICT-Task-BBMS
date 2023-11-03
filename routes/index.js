@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Blood Banking Management System', layout: false });
+  res.render('index', { title: 'Blood Banking Management System', layout: false , donor : req.session.donor });
 });
 
 module.exports = router;

@@ -10,23 +10,26 @@
                         </li>
                         <% } %>
                 </ul>
-                <% } %>
-                    <div class="form-floating m-2">
-                        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
-                            value="<%= donor.email %>">
-                        <label for="email">Email address</label>
-                    </div>
-                    <div class="form-floating m-2">
-                        <input name="password" type="password" class="form-control" id="password"
-                            placeholder="National ID" value="<%= donor.password %>">
-                        <label for="password">Password</label>
-                    </div>
-                    <button class="w-50 btn btn-lg btn-secondary " type="submit">Login</button>
-                    <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
-                    </p>
+            <% } %>
+        <div class="form-floating m-2">
+            <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+                value="<%= donor.email %>">
+            <label for="email">Email address</label>
+        </div>
+        <div class="form-floating m-2">
+            <input name="password" type="password" class="form-control" id="password"
+                placeholder="National ID" value="<%= donor.password %>">
+            <label for="password">Password</label>
+        </div>
+        <div class="row p-3 justify-content-center">
+            <a class="col-4 mx-2 btn btn-lg btn-secondary " href="/donor/register">Register</a>
+            <button class="col-4 mx-2 btn btn-lg btn-primary d-inline" type="submit">Login</button>
+        </div>
+        <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+        </p>
     </form>
 </main>
-<script defer>
+<!-- <script defer>
     const loginForm = document.getElementById('login-form');
     const email = getCookie('email');
     const password = getCookie('password');
@@ -62,4 +65,4 @@
         }
         return "";
     }
-</script>
+</script> -->

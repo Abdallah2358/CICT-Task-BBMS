@@ -17,4 +17,7 @@ router.get('/login', DC.Login);
 router.post('/login',
   checkSchema(registerDonorSchema),
   DC.PostLogin);
+
+/* Get Logout page. */
+router.get('/logout', DC.Logout);
 module.exports = router;

@@ -6,7 +6,6 @@ const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;
 const City = db.City;
 const BloodType = db.BloodType;
-
 const Register = async (req, res, next) => {
     const cities = await Cities;
     const blood_types = await Blood_types;
@@ -53,9 +52,15 @@ const PostRegister = async (req, res, next) => {
         cities: cities, blood_types: blood_types
     });
 }
-
-const Login = (req, res, next) => {
+const Logout = async (req, res, next) => {
+    req.session.destroy();
+    return res.redirect('/');
+}
+const Login = async (req, res, next) => {
     // res.send('aaa');
+    if (req.session.donor) {
+        return res.redirect('/');
+    }
 
     return res.render('donor/login',
         {
@@ -65,12 +70,21 @@ const Login = (req, res, next) => {
             // cities: cities, blood_types: blood_types
         });
 }
-const PostLogin = (req, res) => {
+const PostLogin = async (req, res) => {
+    const { email, password } = req.body;
+    const donor = await Donor.findOne({ where: { email: email, password: password } });
+    if (donor) {
+        req.session.donor = donor;
+        return res.redirect('/');
+    }
     return res.render('donor/login',
         {
             title: 'Donor Register',
             layout: './layouts/sign-in',
-            errors: [], donor: {},
+            errors: [{ msg: "The email and password does not match" }], donor: {
+                email: email,
+                password: password
+            },
             // cities: cities, blood_types: blood_types
         });
 }
@@ -79,4 +93,5 @@ module.exports = {
     PostRegister,
     Login,
     PostLogin,
+    Logout
 };

@@ -43,6 +43,13 @@ app.use(expressLayouts);
 
 app.set('layout', './layouts/dashboard')
 
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(session({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:false,
+    cookie: { maxAge: oneDay,secure: false, httpOnly: false },
+    resave: false 
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
