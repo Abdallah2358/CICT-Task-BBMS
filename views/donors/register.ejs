@@ -26,42 +26,32 @@
               value="<%= donor.email %>">
             <label for="email">Email address</label>
           </div>
-          <!-- <div class="form-floating m-2">
-            <input name="phone" type="text" class="form-control" id="phone" placeholder="01234567890"
-              value="<%= donor.phone %>">
-            <label for="phone">Phone Number</label>
-          </div> -->
-          <!-- <div class="form-floating m-2">
+
+          <div class="form-floating m-2">
             <input name="password" type="password" class="form-control" id="password" placeholder="****"
               value="<%= donor.password %>">
             <label for="password">Password</label>
-          </div> -->
+          </div>
 
           <div class="row justify-content-between">
             <div class="col-5 m-2">
-              <select class="form-select" id="city" name="city">
+              <select class="form-select" id="city_id" name="city_id">
                 <option value="" selected disabled>Select City</option>
-                <option value="Cairo">Cairo</option>
-                <option value="Giza">Giza</option>
-                <option value="Alexandria">Alexandria</option>
-                <option value="Aswan">Aswan</option>
-                <option value="Asyut">Asyut</option>
-                <option value="Beheira">Beheira</option>
-                <option value="Beni Suef">Beni Suef</option>
-                <option value="Dakahlia">Dakahlia</option>
+                <% cities.forEach(city=> { %>
+                  <option value="<%= city.id %>" <%=donor.city_id==city.id ? "selected" :'' %> ><%= city.name %>
+                  </option>
+                  <% }) %>
+
               </select>
             </div>
             <div class="col-5 m-2">
               <select class="form-select" id="blood_type_id" name="blood_type_id">
                 <option selected disabled value="">Select Blood Type</option>
-                <option value="A+">A+</option>
-                <option value="A-">A-</option>
-                <option value="B+">B+</option>
-                <option value="B-">B-</option>
-                <option value="AB+">AB+</option>
-                <option value="AB-">AB-</option>
-                <option value="O+">O+</option>
-                <option value="O-">O-</option>
+                <% blood_types.forEach(blood_type=> { %>
+                  <option value="<%= blood_type.id %>" <%=donor.blood_type_id==blood_type.id ? "selected" :'' %> ><%=
+                      blood_type.name %>
+                  </option>
+                  <% }) %>
               </select>
             </div>
           </div>
