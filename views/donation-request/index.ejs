@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Donor Id</th>
+                <th scope="col">Donor National Id</th>
                 <th scope="col">Blood Type</th>
                 <th scope="col">Status</th>
                 <th scope="col">Virus Test</th>
@@ -22,7 +22,7 @@
                     </td>
                     <td>
                         <a class="link text-dark" href="/donor/<%= dr.donor_id %>">
-                            <%= dr.donor_id %>
+                            <%= dr.donor.national_id %>
                         </a>
                     </td>
                     <td>
