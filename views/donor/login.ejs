@@ -1,7 +1,7 @@
 <main class="form-register w-100 m-auto">
     <form method="post">
-        <%- include('../components/logo') -%>
-            <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
+        <%- include('../partials/logo') -%>
+        <h1 class="h3 mb-3 fw-normal">Please Enter Your Personal Info</h1>
             <% if (errors) { %>
                 <ul class="text-start text-danger ">
                     <% for (const err of errors){ %>
@@ -17,11 +17,11 @@
                 <label for="email">Email address</label>
             </div>
             <div class="form-floating m-2">
-                <input name="national_id" type="text" class="form-control" id="national_id" placeholder="National ID"
-                    value="<%= donor.national_id %>">
-                <label for="national_id">National ID</label>
+                <input name="password" type="text" class="form-control" id="password" placeholder="National ID"
+                    value="<%= donor.password %>">
+                <label for="password">Password</label>
             </div>
-            <button class="w-50 btn btn-lg btn-secondary " type="submit">Register</button>
+            <button class="w-50 btn btn-lg btn-secondary " type="submit">Login</button>
             <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
             </p>
     </form>

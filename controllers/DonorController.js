@@ -11,9 +11,9 @@ const Register = async (req, res, next) => {
     const cities = await Cities;
     const blood_types = await Blood_types;
 
-    return res.render('donors/register',
+    return res.render('donor/register',
         {
-            title: 'register',
+            title: 'Donor Register',
             layout: './layouts/sign-in',
             errors: [], donor: {},
             cities: cities, blood_types: blood_types
@@ -45,8 +45,8 @@ const PostRegister = async (req, res, next) => {
     }
     const errors = result.array()
     // res.send({ errors, reqBody: req.body });
-    return res.render('donors/register', {
-        title: 'register',
+    return res.render('donor/register', {
+        title: 'Donor Register',
         layout: './layouts/sign-in',
         errors: errors,
         donor: donor,
@@ -54,12 +54,19 @@ const PostRegister = async (req, res, next) => {
     });
 }
 
-const Login = (req, res) => {
-    res.render("login", {
-    });
+const Login = (req, res, next) => {
+    // res.send('aaa');
+    
+    return res.render('donor/login',
+        {
+            title: 'Donor Register',
+            layout: './layouts/sign-in',
+            errors: [], donor: {},
+            // cities: cities, blood_types: blood_types
+        });
 }
 const PostLogin = (req, res) => {
-    res.render("login", {
+    res.render("donor/login", {
     });
 }
 module.exports = {
