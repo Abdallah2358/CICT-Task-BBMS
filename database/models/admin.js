@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     title: DataTypes.STRING,
     blood_type_id: {
-      type: Sequelize.SMALLINT,
+      type: DataTypes.SMALLINT,
       references: {
         model: 'BloodType',
         key: 'id',

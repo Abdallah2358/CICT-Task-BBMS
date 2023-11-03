@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const DC = require('../controllers/DonorController');
+const { checkSchema } = require('express-validator');
+const { registerSchema: registerDonorSchema } = require('../validators/donor/registerSchema');
+/* Get Register page. */
+router.get('/register', DC.Register);
 
-/* GET donors listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
+/* Post Register Data */
+router.post('/register',
+  checkSchema(registerDonorSchema),
+  DC.PostRegister);
 module.exports = router;

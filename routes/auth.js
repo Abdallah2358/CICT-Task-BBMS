@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Auth = require('../controllers/AuthController');
 const { checkSchema } = require('express-validator');
-const { registerDonorSchema } = require('../validators/auth/registerDonorSchema');
+const { registerSchema: registerDonorSchema } = require('../validators/donor/registerSchema');
 /* Get Register page. */
 router.get('/donor/register', Auth.GetDonorsRegister);
 
