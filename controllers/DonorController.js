@@ -1,16 +1,28 @@
 const db = require('../database/models');
 const { validationResult } = require('express-validator');
-const Donor = db.Donor;
-const DonationRequest = db.DonationRequest;
 const { transport } = require('../config');
 
-const Register = (req, res, next) => {
-    // res.send("Register")
-    res.render('donors/register', { title: 'register', layout: './layouts/sign-in', errors: [], donor: {} });
+const Donor = db.Donor;
+const DonationRequest = db.DonationRequest;
+const City = db.City;
+const BloodType = db.BloodType;
+
+const Register = async (req, res, next) => {
+    const cities = await City.findAll();
+    const blood_types = await db.BloodType.findAll();
+    res.render('donors/register',
+        {
+            title: 'register',
+            layout: './layouts/sign-in',
+            errors: [], donor: {},
+            cities: cities, blood_types : blood_types
+        });
 }
 const PostRegister = async (req, res, next) => {
+    const donor= await Donor.findOne({ where: { national_id: req.body.national_id } });
     const result = validationResult(req);
-    const donor = Donor.build(req.body);
+    res.send(donor);
+    // const donor = Donor.build(req.body);
     if (result.isEmpty()) {
         await donor.save();
         const dr = await DonationRequest.create({
