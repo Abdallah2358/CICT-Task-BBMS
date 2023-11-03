@@ -1,32 +1,34 @@
 const db = require('../database/models');
 const { validationResult } = require('express-validator');
-const { transport } = require('../config');
-
+const { transport, Cities, Blood_types } = require('../config');
+const app = require('../app');
 const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;
 const City = db.City;
 const BloodType = db.BloodType;
 
 const Register = async (req, res, next) => {
-    const cities = await City.findAll();
-    const blood_types = await db.BloodType.findAll();
-    res.render('donors/register',
+    const cities = await Cities;
+    const blood_types = await Blood_types;
+
+    return res.render('donors/register',
         {
             title: 'register',
             layout: './layouts/sign-in',
             errors: [], donor: {},
-            cities: cities, blood_types : blood_types
+            cities: cities, blood_types: blood_types
         });
 }
 const PostRegister = async (req, res, next) => {
-    const donor= await Donor.findOne({ where: { national_id: req.body.national_id } });
+    const cities = await Cities;
+    const blood_types = await Blood_types;
     const result = validationResult(req);
-    res.send(donor);
-    // const donor = Donor.build(req.body);
+    const donor = Donor.build(req.body);
+    // res.send(result.array());
     if (result.isEmpty()) {
         await donor.save();
         const dr = await DonationRequest.create({
-            donor_id: donor.national_id,
+            donor_id: donor.id,
             blood_type_id: donor.blood_type_id,
             status: "pending",
             test_result: "pending",
@@ -39,7 +41,7 @@ const PostRegister = async (req, res, next) => {
             html: "<h1>Thank you for registering</h1>"
                 + "<h2>you donation is pending approval</h2>",
         });
-        return res.redirect("/auth/donor/register");
+        return res.redirect("/");
     }
     const errors = result.array()
     // res.send({ errors, reqBody: req.body });
@@ -47,7 +49,8 @@ const PostRegister = async (req, res, next) => {
         title: 'register',
         layout: './layouts/sign-in',
         errors: errors,
-        donor: donor
+        donor: donor,
+        cities: cities, blood_types: blood_types
     });
 }
 

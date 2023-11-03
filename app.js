@@ -33,7 +33,7 @@ const donationRequestRouter = require('./routes/donation_request');
 // } catch (error) {
 //   console.error('Unable to connect to the database:', error);
 // }
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +42,7 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
 app.set('layout', './layouts/dashboard')
+
 
 app.use(logger('dev'));
 app.use(express.json());
