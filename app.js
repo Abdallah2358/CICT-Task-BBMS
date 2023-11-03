@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/donors', donorsRouter);
+app.use('/donor', donorsRouter);
 app.use('/donation-request', donationRequestRouter);
 
 // catch 404 and forward to error handler
