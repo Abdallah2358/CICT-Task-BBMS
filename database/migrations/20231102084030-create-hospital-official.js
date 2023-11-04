@@ -45,13 +45,24 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       }
     });
+    await queryInterface.bulkInsert('HospitalOfficials',
+      [
+        {
+          national_id: '987456123', username: 'hospital_official',
+          full_name: 'hospital_official1', password: 'password',
+          email: 'offiacl@example.com', title: 'Hospital Manager',
+          blood_type_id: 1, hospital_id: 1
+        },
+      ]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('HospitalOfficials');

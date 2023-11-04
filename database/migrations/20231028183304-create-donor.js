@@ -1,5 +1,10 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+const { createHash } = require('crypto');
+
+function hash(string) {
+  return createHash('sha256').update(string).digest('hex');
+}
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Donors', {
@@ -42,13 +47,20 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
+
       }
     });
+    await queryInterface.bulkInsert('Donors',
+      [
+        { national_id: '123456789',city_id:1, full_name: 'Abdallah El Hadidi', password: hash('password'), email: 'abdallah@example.com',  blood_type_id: 1 },
+      ]);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Donors');

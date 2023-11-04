@@ -23,6 +23,13 @@ module.exports = {
           key: 'id',
         }
       },
+      donation_request_id: {
+        type: Sequelize.INTEGER
+        , references: {
+          model: 'DonationRequests',
+          key: 'id',
+        }
+      },
       in_stock: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
@@ -30,11 +37,14 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
+        
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       }
     });
     await queryInterface.addIndex(

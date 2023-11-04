@@ -29,13 +29,7 @@ module.exports = {
       test_result: {
         type: Sequelize.ENUM('Pending', 'Positive', 'Negative'),
       },
-      donation_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Donations',
-          key: 'id',
-        }
-      },
+
       accepted_by_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -45,11 +39,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       }
     });
   },

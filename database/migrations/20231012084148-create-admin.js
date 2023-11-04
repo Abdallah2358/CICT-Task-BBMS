@@ -38,14 +38,16 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('NOW')
       }
     });
-    await queryInterface.bulkInsert('BloodTypes',
+    await queryInterface.bulkInsert('Admins',
       [
         { national_id: '123456789', username: 'admin1', full_name: 'admin1', password: 'password', email: 'admin@example.com', title: 'Manager', blood_type_id: 1 },
       ]);
