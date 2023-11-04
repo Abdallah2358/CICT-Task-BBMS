@@ -63,6 +63,13 @@ module.exports = {
         indicesType: 'BTREE',
       }
     );
+    await queryInterface.addIndex(
+      'BloodRequests',
+      ['patient_state'],
+      {
+        indicesType: 'BTREE',
+      }
+    );
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('BloodRequests');
