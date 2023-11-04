@@ -62,7 +62,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/donors', donorsRouter);
 app.use('/donations', donationRouter);
-app.use('/donation-request', donationRequestRouter);
+app.use('/donation-requests', donationRequestRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
