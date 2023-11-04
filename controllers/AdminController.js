@@ -35,7 +35,7 @@ const Login = async (req, res, next) => {
 
     return res.render('admin/login',
         {
-            title: 'Donor Register',
+            title: 'Admin Login',
             layout: './layouts/sign-in',
             errors: [], admin: {},
             // cities: cities, blood_types: blood_types
