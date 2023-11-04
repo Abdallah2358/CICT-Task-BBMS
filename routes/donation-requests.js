@@ -31,9 +31,5 @@ router.get('/:id', DRC.show);
 router.get('/:id/virus-test-result', DRC.get_test_result);
 router.post('/:id/virus-test-result', DRC.post_test_result);
 
-/* Post Register Data */
 
-// router.post('/donor/register',
-//     checkSchema(registerDonorSchema),
-//     DRC.PostDonorsRegister);
 module.exports = router;
