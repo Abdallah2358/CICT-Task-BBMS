@@ -26,23 +26,24 @@
                         </a>
                     </td>
                     <td>
-                        <%= dr.blood_type_id %>
+                        <%= dr.blood_type.name %>
                     </td>
                     <td>
                         <%= dr.status %>
                     </td>
                     <td>
                         <% if (dr.test_result!='Pending' ) { %>
-                            <% if (dr.test_result=='Negative') { %>
+                            <% if (dr.test_result=='Negative' ) { %>
                                 <span class="text-success ">Negative</span>
-                            <% } else { %>
-                                <span class="text-danger ">Positive</span>
-                            <% } %>
+                                <% } else { %>
+                                    <span class="text-danger ">Positive</span>
+                                    <% } %>
 
-                        <% } else { %>
-                            <a class="link btn btn-sm btn-outline-warning"
-                                href="/donation-requests/<%= dr.id %>/virus-test-result">Submit Result</a>
-                        <% } %>
+                                        <% } else { %>
+                                            <a class="link btn btn-sm btn-outline-warning"
+                                                href="/donation-requests/<%= dr.id %>/virus-test-result">Submit
+                                                Result</a>
+                                            <% } %>
                     </td>
                     <td>
                         <%= dr.donation_id %>

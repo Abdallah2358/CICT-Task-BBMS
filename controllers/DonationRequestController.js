@@ -8,7 +8,7 @@ const Donation = db.Donation;
 const DonationRequest = db.DonationRequest;
 
 const index = async (req, res, next) => {
-    const donation_requests = await DonationRequest.findAll({ include: 'donor' });
+    const donation_requests = await DonationRequest.findAll({ include: ['donor','blood_type'] });
     res.render('donation-request/index', { title: 'Donation Requests', donation_requests: donation_requests });
 }
 const show = async (req, res, next) => {
