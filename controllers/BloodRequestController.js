@@ -15,7 +15,7 @@ const index = async (req, res, next) => {
         .findAll({
             where: { hospital_id: official.hospital_id },
             include: ['blood_type', 'city'],
-            order: [['patient_state', 'ASC'], ['createdAt', 'DESC']]
+            order: [['fulfilled','DESC'],['patient_state', 'ASC'], ['createdAt', 'DESC']]
         });
     return res.render(
         'blood-requests/index',
