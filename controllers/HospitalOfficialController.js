@@ -1,3 +1,30 @@
+const { render } = require("ejs");
+const db = require("../database/models");
+const HospitalOfficial = db.HospitalOfficial;
+const Login = async (req, res, next) => {
+    // return res.send('Hospital Official Login');
+    return res.render('hospital-officials/login',
+        {
+            title: 'Hospital Official Login', official: {}, errors: [],
+            layout: 'layouts/sign-in',
+        });
+}
+const PostLogin = async (req, res, next) => {
+    const { email, password } = req.body;
+    const user = await HospitalOfficial.findOne({ where: { email, password } });
+    if (!user) {
+        return res.render('hospital-officials/login',
+            {
+                title: 'Hospital Official Login',
+                errors: [{ msg: "The email and password does not match" }],
+                official: { email, password },
+                layout: 'layouts/login',
+            });
+    }
+    req.session.official = user;
+    res.send(req.session.official);
+    res.redirect('/hospital-officials');
+}
 
 // returns list view of resource
 const index = (req, res, next) => {
@@ -37,6 +64,8 @@ const update = (req, res, next) => { }
 const deleteAction = (req, res, next) => { }
 
 module.exports = {
+    Login,
+    PostLogin,
     index,
     show,
     create,

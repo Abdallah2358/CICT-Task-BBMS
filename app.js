@@ -22,6 +22,8 @@ const authRouter = require('./routes/auth');
 const donorsRouter = require('./routes/donors');
 const donationRouter = require('./routes/donations');
 const donationRequestRouter = require('./routes/donation-requests');
+const bloodRequestRouter = require('./routes/blood-requests');
+const hospitalOfficialRouter = require('./routes/hospital-officials');
 
 // DB Connection
 // const sequelize = new Sequelize('bbms', 'root', '', {
@@ -63,8 +65,8 @@ app.use('/auth', authRouter);
 app.use('/donors', donorsRouter);
 app.use('/donations', donationRouter);
 app.use('/donation-requests', donationRequestRouter);
-app.use('/blood-requests', donationRequestRouter);
-app.use('hospital-officials', donationRequestRouter);
+app.use('/blood-requests', bloodRequestRouter);
+app.use('/hospital-officials', hospitalOfficialRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

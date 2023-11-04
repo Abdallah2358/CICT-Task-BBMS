@@ -3,6 +3,8 @@ const HOC = require('../controllers/HospitalOfficialController');
 
 const router = express.Router();
 
+router.get('/login', HOC.Login);
+router.post('/login', HOC.PostLogin);
 /* GET home page. */
 router.get('/', HOC.index);
 router.get('/:id', HOC.show);

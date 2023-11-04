@@ -1,0 +1,30 @@
+<main class="form-register w-100 m-auto">
+    <form method="post" id="login-form">
+        <%- include('../partials/logo') -%>
+            <h1 class="h3 mb-3 fw-normal">Welcome To Our System</h1>
+            <% if (errors) { %>
+                <ul class="text-start text-danger ">
+                    <% for (const err of errors){ %>
+                        <li class="">
+                            <%= err.msg %>
+                        </li>
+                        <% } %>
+                </ul>
+                <% } %>
+        <div class="form-floating m-2">
+            <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+                value="<%= official.email %>">
+            <label for="email">Email address</label>
+        </div>
+        <div class="form-floating m-2">
+            <input name="password" type="password" class="form-control" id="password"
+                placeholder="National ID" value="<%= official.password %>">
+            <label for="password">Password</label>
+        </div>
+        <div class="row p-3 justify-content-center">
+            <button class="col-4 mx-2 btn btn-lg btn-primary d-inline" type="submit">Login</button>
+        </div>
+        <p class="mt-5 mb-3 text-muted">&copy; <%= new Date().getFullYear(); %>
+        </p>
+    </form>
+</main>
