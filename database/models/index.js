@@ -38,6 +38,30 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+const handleRequests = async (request, options) => {
+  const unfulfilledRequests = await db.BloodRequest.findAll({
+    where: { fulfilled: false },
+    order: [['patient_state', 'ASC'], ['createdAt', 'ASC']]
+  });
+  if (unfulfilledRequests.length >= 10) {
+    const donations = await db.Donation.findAll(
+      { where: { in_stock: true }, order: [['createdAt', 'ASC']] });
+    for (const req of unfulfilledRequests) {
+      for (const donation of donations) {
+        if (req.blood_type_id === donation.blood_type_id) {
+          await sequelize.transaction(async (t) => {
+            req.donation_id = donation.id;
+            req.fulfilled = true;
+            await req.save({ transaction: t });
+            donation.in_stock = false;
+            await donation.save({ transaction: t });
+          });
+          break;
+        }
+      }
+    }
+  }
+}
 
 db.City.hasMany(db.Hospital, { foreignKey: 'city_id', as: 'hospitals' });
 db.City.hasMany(db.Donor, { foreignKey: 'city_id', as: 'donors' });
@@ -75,6 +99,10 @@ db.BloodRequest.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'bloo
 
 db.Admin.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 db.Admin.hasMany(db.DonationRequest, { foreignKey: 'accepted_by_id', as: 'donation_requests' });
+
+//hooks
+db.BloodRequest.addHook('afterCreate', 'handleRequestsOnBR', handleRequests);
+db.Donation.addHook('afterCreate', 'handleRequestsOnD', handleRequests);
 
 
 module.exports = db;
