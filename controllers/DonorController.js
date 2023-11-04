@@ -18,13 +18,13 @@ const BloodType = db.BloodType;
 
 const show = async (req, res, next) => {
     const donor = await Donor.findOne({ where: { id: req.params.id }, include: ['city', 'blood_type'] });
-    return res.render('donor/show', { title: 'Donor #' + req.params.id, donor: donor });
+    return res.render('donors/show', { title: 'Donor #' + req.params.id, donor: donor });
 }
 const Register = async (req, res, next) => {
     const cities = await Cities;
     const blood_types = await Blood_types;
-
-    return res.render('donor/register',
+    // return res.send('register');
+    return res.render('donors/register',
         {
             title: 'Donor Register',
             layout: './layouts/sign-in',
@@ -61,7 +61,7 @@ const PostRegister = async (req, res, next) => {
     }
     const errors = result.array()
     // res.send({ errors, reqBody: req.body });
-    return res.render('donor/register', {
+    return res.render('donors/register', {
         title: 'Donor Register',
         layout: './layouts/sign-in',
         errors: errors,
@@ -79,7 +79,7 @@ const Login = async (req, res, next) => {
         return res.redirect('/');
     }
 
-    return res.render('donor/login',
+    return res.render('donors/login',
         {
             title: 'Donor Login',
             layout: './layouts/sign-in',
@@ -95,7 +95,7 @@ const PostLogin = async (req, res) => {
         req.session.donor = donor;
         return res.redirect('/');
     }
-    return res.render('donor/login',
+    return res.render('donors/login',
         {
             title: 'Donor Register',
             layout: './layouts/sign-in',

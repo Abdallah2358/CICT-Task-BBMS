@@ -37,7 +37,7 @@ const store = async (req, res, next) => {
     // return res.send(donor);
     if (!donor) {
         // res.send('aaa')
-        return res.redirect('/donor/register');
+        return res.redirect('/donors/register');
     }
     const last_donation_request = await DonationRequest.findOne({ where: { donor_id: donor.id }, order: [['createdAt', 'DESC']] });
     if (last_donation_request && last_donation_request.status == "pending") {
