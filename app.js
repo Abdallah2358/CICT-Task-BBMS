@@ -18,7 +18,6 @@ const db = require("./database/models");
 
 
 const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
 const donorsRouter = require('./routes/donors');
 const donationRouter = require('./routes/donations');
 const donationRequestRouter = require('./routes/donation-requests');
@@ -66,7 +65,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
 app.use('/donors', donorsRouter);
 app.use('/donations', donationRouter);
 app.use('/donation-requests', donationRequestRouter);
