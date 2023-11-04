@@ -46,7 +46,9 @@ const PostLogin = async (req, res) => {
     const admin = await Admin.findOne({ where: { email: email, password: password } });
     if (admin) {
         req.session.admin = admin;
-        return res.redirect('/admin');
+        const oldUrl = req.session.oldUrl || '/admin';
+        req.session.oldUrl = null;
+        return res.redirect(oldUrl);
     }
     return res.render('admin/login',
         {
@@ -56,7 +58,6 @@ const PostLogin = async (req, res) => {
                 email: email,
                 password: password
             },
-            // cities: cities, blood_types: blood_types
         });
 }
 module.exports = {

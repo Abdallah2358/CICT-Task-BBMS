@@ -1,4 +1,7 @@
 const db = require('../database/models');
+const config = require('../config');
+
+const BloodTypes = config.Blood_types;
 const BloodRequest = db.BloodRequest;
 // returns list view of resource
 const index = async (req, res, next) => {
@@ -6,7 +9,11 @@ const index = async (req, res, next) => {
     if (!official) {
         return res.redirect('/hospital-officials/login');
     }
-    const requests = await BloodRequest.findAll({ where: { hospital_id: official.hospital_id }, include: ['donation'] });
+    const requests = await BloodRequest
+        .findAll({
+            where: { hospital_id: official.hospital_id },
+            include: ['blood_type', 'city']
+        });
     return res.render('blood-requests/index', { title: 'Blood Requests', requests: requests });
 }
 
@@ -16,8 +23,10 @@ const show = (req, res, next) => {
 }
 
 // returns create view for a resource
-const create = (req, res, next) => {
-    res.render('blood-request/create', { title: 'Blood Request', errors: {} });
+const create = async (req, res, next) => {
+    // return res.send('create');
+    const blood_types = await BloodTypes;
+res.render('blood-requests/create', { title: 'Blood Request',blood_types , errors: {} });
 }
 
 // handles priesting the resource in the database

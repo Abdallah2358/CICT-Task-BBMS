@@ -22,8 +22,10 @@ const PostLogin = async (req, res, next) => {
             });
     }
     req.session.official = user;
-    // res.send(req.session.official);
-    res.redirect('/blood-requests');
+    const oldUrl = req.session.oldUrl || '/blood-requests';
+    req.session.oldUrl = null;
+    return res.redirect(oldUrl);
+
 }
 
 // returns list view of resource
