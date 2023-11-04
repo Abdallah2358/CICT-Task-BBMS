@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     hospital_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Hospitals',
+        model: 'Hospital',
         key: 'id'
       }
     },
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     blood_type_id: {
       type: DataTypes.STRING,
       references: {
-        model: 'BloodTypes',
+        model: 'BloodType',
         key: 'id'
       }
     },

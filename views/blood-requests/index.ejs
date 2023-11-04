@@ -1,3 +1,54 @@
-<h1>Hello</h1>
+<h2>Blood Requests</h2>
+<h2><a class="btn btn-outline-secondary btn-sm" href="#/hospital/<%= session.official.hospital_id %>">
+        Hospital # <%=session.official.hospital_id %>
+    </a>
+</h2>
+<h2><a class="btn btn-outline-secondary btn-sm" href="/blood-requests/create">
+        Create Blood Request
+    </a>
+</h2>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Blood Type</th>
+                <th scope="col">Patient State</th>
+                <th scope="col">Fulfilled</th>
+                <th scope="col">City</th>
+                <th scope="col">Donation Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% requests.forEach(request=> { %>
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-outline-secondary" href="/blood-requests/<%= request.id %>">
+                            <%= request.id %>
+                        </a>
+                    </td>
+                    <td>
+                        <%= request.blood_type.name %>
+                    </td>
+                    <td>
+                        <%= request.patient_state %>
+                    </td>
+                    <td>
+                        <%= request.fulfilled %>
+                    </td>
+                    <td>
+                        <%= request.city.name %>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-secondary" href="/donations/<%= request.donation_id %>">
+                            <%= request.donation_id %>
+                        </a>
+                    </td>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+</div>
+
 <%- contentFor('styles') %>
     <%- contentFor('script') %>

@@ -71,6 +71,7 @@ db.HospitalOfficial.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: '
 db.BloodRequest.belongsTo(db.City, { foreignKey: 'city_id', as: 'city' });
 db.BloodRequest.belongsTo(db.Hospital, { foreignKey: 'hospital_id', as: 'hospital' });
 db.BloodRequest.belongsTo(db.Donation, { foreignKey: 'donation_id', as: 'donation' });
+db.BloodRequest.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 
 db.Admin.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 db.Admin.hasMany(db.DonationRequest, { foreignKey: 'accepted_by_id', as: 'donation_requests' });

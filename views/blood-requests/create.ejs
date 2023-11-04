@@ -1,0 +1,46 @@
+<h2>Create Blood Requests</h2>
+<% if (errors.length) { %>
+    <ul class="text-start text-danger ">
+        <% for (const err of errors){ %>
+            <li class="">
+                <%= err.msg %>
+            </li>
+            <% } %>
+    </ul>
+<% } %>
+<form method="post">
+    <div class="row mb-2">
+        <label for="blood_type" class="form-label col-4">
+            Blood Type :
+        </label>
+        <select class="form-select-sm col-3" name="blood_type_id" id="blood_type_id">
+            <option disabled selected=""></option>
+            <% blood_types.forEach(blood_type=> { %>
+                <option <%= request.blood_type_id==blood_type.id ? 'selected' :'' %> value="<%= blood_type.id %>" >
+                        <%= blood_type.name %>
+                </option>
+                <% }); %>
+        </select>
+    </div>
+    <div class="row mb-2">
+        <label for="" class="form-label col-4">Number of Requests</label>
+        <input class="col-3" name="number" id="number" type="number" value=<%= request.number %>>
+    </div>
+    <div class="row mb-2">
+        <label for="patient_state" class="form-label col-4">Patient State</label>
+        <select class="form-select-sm col-3" name="patient_state" id="patient_state">
+            <option disabled selected=""></option>
+            <% states.forEach(state=> { %>
+                <option <%= request.patient_state==state ? 'selected' :'' %> value="<%= state %>" >
+                        <%= state %>
+                </option>
+                <% }); %>
+        </select>
+    </div>
+    <div class="row">
+        <button  type="submit" class="btn  btn-outline-primary col">Submit</button>
+    </div>
+</form>
+
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

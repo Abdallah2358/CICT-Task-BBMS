@@ -1,8 +1,10 @@
 const db = require('../database/models');
 const config = require('../config');
+const { validationResult } = require('express-validator');
 
 const BloodTypes = config.Blood_types;
 const BloodRequest = db.BloodRequest;
+const HospitalOfficial = db.HospitalOfficial;
 // returns list view of resource
 const index = async (req, res, next) => {
     const official = req.session.official;
@@ -12,30 +14,61 @@ const index = async (req, res, next) => {
     const requests = await BloodRequest
         .findAll({
             where: { hospital_id: official.hospital_id },
-            include: ['blood_type', 'city']
+            include: ['blood_type', 'city'],
+            order: [['patient_state', 'ASC'], ['createdAt', 'DESC']]
         });
-    return res.render('blood-requests/index', { title: 'Blood Requests', requests: requests });
+    return res.render(
+        'blood-requests/index',
+        { title: 'Blood Requests', requests: requests }
+    );
 }
 
 // returns single view of a resource
-const show = (req, res, next) => {
-    res.render('blood-request/show', { title: 'Blood Request' });
+const show = async (req, res, next) => {
+    const blood_types = await BloodTypes;
+    return res.render('blood-request/show', { title: 'Blood Request', blood_types });
 }
 
 // returns create view for a resource
 const create = async (req, res, next) => {
-    // return res.send('create');
     const blood_types = await BloodTypes;
-res.render('blood-requests/create', { title: 'Blood Request',blood_types , errors: {} });
+    return res.render('blood-requests/create',
+        {
+            title: 'Create Blood Request',
+            blood_types,
+            request: {},
+            states: ['Immediate', 'Urgent', 'Normal'],
+            errors: []
+        });
 }
 
 // handles priesting the resource in the database
 // may redirect to another action or return the status with errors if any 
-const store = (req, res, next) => {
-    //if  errors
-    //   res.render('blood-request/create', { title: 'Blood Request' , errors:{} });
-    //else
-    //db.model.create ({req.body})  
+const store = async (req, res, next) => {
+    // return res.send('store');
+    const result = validationResult(req);
+    const blood_types = await BloodTypes;
+    const { patient_state, blood_type_id, number } = req.body;
+    const official = req.session.official;
+    const hospital = await db.Hospital.findOne({ where: { id: official.hospital_id }, include: ['city'] });
+    const request = { number, patient_state, blood_type_id, city_id: hospital.city.id, hospital_id: official.hospital_id };
+
+    if (!result.isEmpty()) {
+        // return res.send(request);
+        return res.render('blood-requests/create',
+            {
+                title: 'Create Blood Request',
+                blood_types,
+                request: request,
+                states: ['Immediate', 'Urgent', 'Normal'],
+                errors: result.array()
+            });
+    }
+    for (let i = 0; i < number; i++) {
+        const blood_request = BloodRequest.build(request);
+        blood_request.save();
+    }
+    return res.redirect('/blood-requests');
 
 }
 
