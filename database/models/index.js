@@ -39,40 +39,41 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.City.hasMany(db.Hospital, { foreignKey: 'city_id',as : 'hospitals'  });
-db.City.hasMany(db.Donor, { foreignKey: 'city_id' , as : 'donors'});
-db.City.hasMany(db.BloodRequest, { foreignKey: 'city_id' , as : 'blood_requests'});
+db.City.hasMany(db.Hospital, { foreignKey: 'city_id', as: 'hospitals' });
+db.City.hasMany(db.Donor, { foreignKey: 'city_id', as: 'donors' });
+db.City.hasMany(db.BloodRequest, { foreignKey: 'city_id', as: 'blood_requests' });
 
-db.BloodType.hasMany(db.Donor, { foreignKey: 'blood_type_id' , as : 'donors'});
-db.BloodType.hasMany(db.Donation, { foreignKey: 'blood_type_id' , as : 'donations'});
-db.BloodType.hasMany(db.DonationRequest, { foreignKey: 'blood_type_id' , as : 'donation_requests'});
-db.BloodType.hasMany(db.Admin, { foreignKey: 'blood_type_id' , as : 'admins'});
-db.BloodType.hasMany(db.HospitalOfficial, { foreignKey: 'blood_type_id', as : 'hospital_officials' });
-db.BloodType.hasMany(db.BloodRequest, { foreignKey: 'blood_type_id', as : 'blood_requests' });
+db.BloodType.hasMany(db.Donor, { foreignKey: 'blood_type_id', as: 'donors' });
+db.BloodType.hasMany(db.Donation, { foreignKey: 'blood_type_id', as: 'donations' });
+db.BloodType.hasMany(db.DonationRequest, { foreignKey: 'blood_type_id', as: 'donation_requests' });
+db.BloodType.hasMany(db.Admin, { foreignKey: 'blood_type_id', as: 'admins' });
+db.BloodType.hasMany(db.HospitalOfficial, { foreignKey: 'blood_type_id', as: 'hospital_officials' });
+db.BloodType.hasMany(db.BloodRequest, { foreignKey: 'blood_type_id', as: 'blood_requests' });
 
-db.Donor.hasMany(db.Donation, { foreignKey: 'donor_id', as : 'donations' });
-db.Donor.hasMany(db.DonationRequest, { foreignKey: 'donor_id', as : 'donation_requests' });
-db.Donor.belongsTo(db.City, { foreignKey: 'city_id', as : 'city' });
-db.Donor.belongsTo(db.BloodType, { foreignKey: 'blood_type_id' , as : 'blood_type'});
+db.Donor.hasMany(db.Donation, { foreignKey: 'donor_id', as: 'donations' });
+db.Donor.hasMany(db.DonationRequest, { foreignKey: 'donor_id', as: 'donation_requests' });
+db.Donor.belongsTo(db.City, { foreignKey: 'city_id', as: 'city' });
+db.Donor.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 
-db.Donation.belongsTo(db.Donor, { foreignKey: 'donor_id', as : 'donor' });
-db.Donation.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as : 'blood_type' });
-db.Donation.belongsTo(db.DonationRequest, { foreignKey: 'blood_type_id', as : 'donation_request' });
+db.Donation.belongsTo(db.Donor, { foreignKey: 'donor_id', as: 'donor' });
+db.Donation.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
+db.Donation.belongsTo(db.DonationRequest, { foreignKey: 'blood_type_id', as: 'donation_request' });
 
-db.DonationRequest.belongsTo(db.Donor, { foreignKey: 'donor_id', as : 'donor' });
-db.DonationRequest.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as : 'blood_type' });
+db.DonationRequest.belongsTo(db.Donor, { foreignKey: 'donor_id', as: 'donor' });
+db.DonationRequest.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 
-db.Hospital.hasMany(db.HospitalOfficial, { foreignKey: 'hospital_id' , as : 'hospital_officials'});
-db.Hospital.belongsTo(db.City, { foreignKey: 'city_id', as : 'city' });
+db.Hospital.hasMany(db.HospitalOfficial, { foreignKey: 'hospital_id', as: 'hospital_officials' });
+db.Hospital.belongsTo(db.City, { foreignKey: 'city_id', as: 'city' });
 
-db.HospitalOfficial.belongsTo(db.Hospital, { foreignKey: 'hospital_id', as : 'hospital' });
-db.HospitalOfficial.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as : 'blood_type' });
+db.HospitalOfficial.belongsTo(db.Hospital, { foreignKey: 'hospital_id', as: 'hospital' });
+db.HospitalOfficial.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
 
-db.BloodRequest.belongsTo(db.City, { foreignKey: 'city_id', as : 'city' });
-db.BloodRequest.belongsTo(db.Hospital, { foreignKey: 'hospital_id', as : 'hospital' });
+db.BloodRequest.belongsTo(db.City, { foreignKey: 'city_id', as: 'city' });
+db.BloodRequest.belongsTo(db.Hospital, { foreignKey: 'hospital_id', as: 'hospital' });
+db.BloodRequest.belongsTo(db.Donation, { foreignKey: 'donation_id', as: 'donation' });
 
-db.Admin.belongsTo(db.BloodType, { foreignKey: 'blood_type_id' , as : 'blood_type'});
-db.Admin.hasMany(db.DonationRequest, { foreignKey: 'accepted_by_id' , as : 'donation_requests'});
+db.Admin.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as: 'blood_type' });
+db.Admin.hasMany(db.DonationRequest, { foreignKey: 'accepted_by_id', as: 'donation_requests' });
 
 
 module.exports = db;

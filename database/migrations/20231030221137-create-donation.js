@@ -52,7 +52,6 @@ module.exports = {
       ['in_stock'],
       {
         indicesType: 'BTREE',
-        where: { bool: 'true' },
       }
     );
 

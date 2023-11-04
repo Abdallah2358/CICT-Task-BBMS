@@ -29,6 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    donation_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Donation',
+        key: 'id',
+      }
+    },
+    fulfilled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     city_id: {
       type: DataTypes.INTEGER,
       references: {
