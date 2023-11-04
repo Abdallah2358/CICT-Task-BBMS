@@ -35,11 +35,18 @@ module.exports = {
         defaultValue: true
 
       },
+      city_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Cities',
+          key: 'id',
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('NOW')
-        
+
       },
       updatedAt: {
         allowNull: false,

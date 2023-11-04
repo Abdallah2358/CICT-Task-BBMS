@@ -109,6 +109,7 @@ const post_test_result = async (req, res) => {
             donor_id: donor.id,
             blood_type_id: donor.blood_type_id,
             donation_request_id: dr.id,
+            city_id: donor.city_id,
         });
         dr.donation_id = donation.id;
         // res.send({ donation: donation })

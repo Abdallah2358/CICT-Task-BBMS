@@ -35,7 +35,13 @@ module.exports = (sequelize, DataTypes) => {
     in_stock: {
       type: DataTypes.BOOLEAN,
     },
-
+    city_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'City',
+        key: 'id',
+      }
+    }
   }, {
     sequelize,
     modelName: 'Donation',
