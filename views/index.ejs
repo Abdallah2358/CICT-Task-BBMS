@@ -28,14 +28,14 @@
 
         <nav class="nav nav-masthead justify-content-center float-md-end">
           <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/">Home</a>
-          <!-- <a class="nav-link fw-bold py-1 px-0" href="/donor/register">Donate</a> -->
+          <!-- <a class="nav-link fw-bold py-1 px-0" href="/donors/register">Donate</a> -->
           <% if (donor) { %>
             <p class="py-1 px-2">Welcome, <strong>
                 <%= donor.full_name.split(' ')[0] %></strong></p>
-            <a class="nav-link fw-bold py-1 px-0" href="/donor/logout">Logout</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/donors/logout">Logout</a>
           <% } else { %>
-            <a class="nav-link fw-bold py-1 px-0" href="/donor/login">Login</a>
-            <a class="nav-link fw-bold py-1 px-0" href="/donor/register">Register</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/donors/login">Login</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/donors/register">Register</a>
           <% } %>
         </nav>
       </div>
