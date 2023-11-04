@@ -48,7 +48,7 @@ const handleRequests = async (request, options) => {
       { where: { in_stock: true }, order: [['createdAt', 'ASC']] });
     for (const req of unfulfilledRequests) {
       for (const donation of donations) {
-        if (req.blood_type_id === donation.blood_type_id) {
+        if (req.blood_type_id === donation.blood_type_id && donation.in_stock) {
           await sequelize.transaction(async (t) => {
             req.donation_id = donation.id;
             req.fulfilled = true;
