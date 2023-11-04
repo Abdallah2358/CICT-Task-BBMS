@@ -1,0 +1,26 @@
+<h1>Donation #<%= donation.id %>
+</h1>
+<p>
+    <span>Donor Full Name:</span>
+    <a class="text-decoration-none btn btn-outline-secondary btn-sm" href="/donor/<%= donation.donor_id %>">
+        <%= donation.donor.full_name %>
+    </a>
+</p>
+<p>
+    <span>Donation Request:</span>
+    <a class="text-decoration-none btn btn-outline-secondary btn-sm"
+        href="/donation-requests/<%= donation.donation_request_id %>">
+        <%= donation.donation_request_id %>
+    </a>
+</p>
+
+<p>Blood Type : <%= donation.blood_type.name %>
+</p>
+<p>In Stock : <%= donation.in_stock %>
+</p>
+
+
+<a class="btn btn-sm btn-outline-secondary" href="/donations">
+    <span data-feather="arrow-left" class="align-text-bottom"></span> donations</a>
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

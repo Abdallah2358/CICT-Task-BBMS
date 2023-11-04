@@ -4,6 +4,7 @@ const DC = require('../controllers/DonorController');
 const { checkSchema } = require('express-validator');
 const { registerSchema: registerDonorSchema } = require('../validators/donor/registerSchema');
 
+router.get('/:id', DC.show);
 /* Get Register page. */
 router.get('/register', DC.Register);
 /* Post Register Data */

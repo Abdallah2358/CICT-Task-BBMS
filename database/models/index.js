@@ -57,6 +57,7 @@ db.Donor.belongsTo(db.BloodType, { foreignKey: 'blood_type_id' , as : 'blood_typ
 
 db.Donation.belongsTo(db.Donor, { foreignKey: 'donor_id', as : 'donor' });
 db.Donation.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as : 'blood_type' });
+db.Donation.belongsTo(db.DonationRequest, { foreignKey: 'blood_type_id', as : 'donation_request' });
 
 db.DonationRequest.belongsTo(db.Donor, { foreignKey: 'donor_id', as : 'donor' });
 db.DonationRequest.belongsTo(db.BloodType, { foreignKey: 'blood_type_id', as : 'blood_type' });

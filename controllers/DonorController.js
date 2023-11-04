@@ -7,13 +7,19 @@ const app = require('../app');
 const { createHash } = require('crypto');
 
 function hash(string) {
-  return createHash('sha256').update(string).digest('hex');
+    return createHash('sha256').update(string).digest('hex');
 }
 
 const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;
 const City = db.City;
 const BloodType = db.BloodType;
+
+
+const show = async (req, res, next) => {
+    const donor = await Donor.findOne({ where: { id: req.params.id }, include: ['city', 'blood_type'] });
+    return res.render('donor/show', { title: 'Donor #' + req.params.id, donor: donor });
+}
 const Register = async (req, res, next) => {
     const cities = await Cities;
     const blood_types = await Blood_types;
@@ -101,6 +107,7 @@ const PostLogin = async (req, res) => {
         });
 }
 module.exports = {
+    show,
     Register,
     PostRegister,
     Login,

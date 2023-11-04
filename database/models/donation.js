@@ -31,8 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         model: 'DonationRequest',
         key: 'id',
       }
-    }
-    
+    },
+    in_stock: {
+      type: DataTypes.BOOLEAN,
+    },
+
   }, {
     sequelize,
     modelName: 'Donation',

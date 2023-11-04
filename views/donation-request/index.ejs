@@ -16,12 +16,12 @@
 
                 <tr>
                     <td>
-                        <a class="link text-dark" href="/donation-request/<%= dr.id %>">
+                        <a class="link text-dark" href="/donation-requests/<%= dr.id %>">
                             <%= dr.id %>
                         </a>
                     </td>
                     <td>
-                        <a class="link text-dark" href="/donor/<%= dr.donor_id %>">
+                        <a class="link text-dark" href="/donors/<%= dr.donor_id %>">
                             <%= dr.donor.national_id %>
                         </a>
                     </td>
@@ -41,7 +41,7 @@
 
                         <% } else { %>
                             <a class="link btn btn-sm btn-outline-warning"
-                                href="/donation-request/<%= dr.id %>/virus-test-result">Submit Result</a>
+                                href="/donation-requests/<%= dr.id %>/virus-test-result">Submit Result</a>
                         <% } %>
                     </td>
                     <td>

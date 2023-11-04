@@ -1,0 +1,19 @@
+<h1>Donor #<%= donor.id %>
+</h1>
+<p>
+    <span>Full Name:</span>
+    <%= donor.full_name %>
+</p>
+
+<p>Blood Type : <%= donor.blood_type.name %>
+</p>
+<p>City : <%= donor.city.name %>
+</p>
+
+<!-- <p>Virus Test : <%= // donor.test_result %>
+</p> -->
+
+<a class="btn btn-sm btn-outline-secondary" href="/donations">
+    <span data-feather="arrow-left" class="align-text-bottom"></span> donations</a>
+<%- contentFor('styles') %>
+    <%- contentFor('script') %>

@@ -2,21 +2,19 @@
 </h1>
 <p>
     <span>Donor Id:</span>
-    <a href="/donor/<%= request.donor_id %>">
-        <%= request.donor_id %>
+    <a class="text-decoration-none btn btn-outline-secondary btn-sm" href="/donor/<%= request.donor_id %>">
+        <%= request.donor.full_name %>
     </a>
 </p>
 
-<p>Blood Type : <%= request.blood_type_id %>
+<p>Blood Type : <%= request.blood_type.name %>
 </p>
 <p>Status : <%= request.status %>
 </p>
 <p>Virus Test : <%= request.test_result %>
 </p>
 
-<p>Approved Donation Id : <a href="/donation  /<%= request.donation_id %>">
-        <%= request.donation_id %>
-    </a> </p>
-<a href="/donation-request/">&lt- back</a>
+<a class="btn btn-sm btn-outline-secondary" href="/donation-request/">
+    <span data-feather="arrow-left" class="align-text-bottom"></span> donation requests</a>
 <%- contentFor('styles') %>
     <%- contentFor('script') %>

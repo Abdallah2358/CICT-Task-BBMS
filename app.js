@@ -20,7 +20,8 @@ const db = require("./database/models");
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const donorsRouter = require('./routes/donors');
-const donationRequestRouter = require('./routes/donation_request');
+const donationRouter = require('./routes/donations');
+const donationRequestRouter = require('./routes/donation_requests');
 
 // DB Connection
 // const sequelize = new Sequelize('bbms', 'root', '', {
@@ -45,10 +46,10 @@ app.set('layout', './layouts/dashboard')
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized:false,
-    cookie: { maxAge: oneDay,secure: false, httpOnly: false },
-    resave: false 
+  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+  saveUninitialized: false,
+  cookie: { maxAge: oneDay, secure: false, httpOnly: false },
+  resave: false
 }));
 
 app.use(logger('dev'));
@@ -59,7 +60,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/donor', donorsRouter);
+app.use('/donors', donorsRouter);
+app.use('/donations', donationRouter);
 app.use('/donation-request', donationRequestRouter);
 
 // catch 404 and forward to error handler
@@ -75,7 +77,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', { layout: false });
 });
 
 module.exports = app;

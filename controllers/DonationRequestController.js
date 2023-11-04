@@ -12,8 +12,8 @@ const index = async (req, res, next) => {
     res.render('donation-request/index', { title: 'Donation Requests', donation_requests: donation_requests });
 }
 const show = async (req, res, next) => {
-    const dr = await DonationRequest.findOne({ where: { id: req.params.id } });
-    // res.send({ r: req.params.id });
+    const dr = await DonationRequest
+    .findOne({ where: { id: req.params.id }, include: ['donor', 'blood_type'] });
     res.render('donation-request/show',
         {
             title: 'Donation Request #' + req.params.id,
@@ -63,7 +63,7 @@ const store = async (req, res, next) => {
             status: "pending",
             test_result: "pending",
         });
-        return res.redirect('/donation-request/' + dr.id + '/virus-test-result');
+        return res.redirect('/donation-requests/' + dr.id + '/virus-test-result');
     }
     const next_donation_date = new Date(last_donation.createdAt);
     next_donation_date.setMonth(next_donation_date.getMonth() + 3);
@@ -90,7 +90,7 @@ const post_test_result = async (req, res) => {
     // res.send('aaa')
     const dr = await DonationRequest.findOne({ where: { id: req.params.id }, include: 'donor' });
     if (!dr) {
-        return res.redirect('/donation-request');
+        return res.redirect('/donation-requests');
     }
     const donor = dr.donor;
     const lastDonation = await Donation.findOne({ where: { donor_id: dr.donor_id }, order: [['createdAt', 'DESC']] });
@@ -108,11 +108,12 @@ const post_test_result = async (req, res) => {
         const donation = await Donation.create({
             donor_id: donor.id,
             blood_type_id: donor.blood_type_id,
+            donation_request_id: dr.id,
         });
         dr.donation_id = donation.id;
         // res.send({ donation: donation })
         await dr.save();
-        return res.redirect('/donation-request');
+        return res.redirect('/donation-requests');
     }
     dr.status = "Rejected";
     await transport.sendMail({
@@ -124,7 +125,7 @@ const post_test_result = async (req, res) => {
     });
     dr.test_result = req.body.test_result;
     await dr.save();
-    return res.redirect('/donation-request');
+    return res.redirect('/donation-requests');
 }
 
 const can_donate = (donation_request_date, last_donation_date = null) => {
