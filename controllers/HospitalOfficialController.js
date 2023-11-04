@@ -18,12 +18,12 @@ const PostLogin = async (req, res, next) => {
                 title: 'Hospital Official Login',
                 errors: [{ msg: "The email and password does not match" }],
                 official: { email, password },
-                layout: 'layouts/login',
+                layout: 'layouts/sign-in',
             });
     }
     req.session.official = user;
-    res.send(req.session.official);
-    res.redirect('/hospital-officials');
+    // res.send(req.session.official);
+    res.redirect('/blood-requests');
 }
 
 // returns list view of resource

@@ -1,7 +1,13 @@
-
+const db = require('../database/models');
+const BloodRequest = db.BloodRequest;
 // returns list view of resource
-const index = (req, res, next) => {
-    res.render('blood-request/index', { title: 'Blood Request' });
+const index = async (req, res, next) => {
+    const official = req.session.official;
+    if (!official) {
+        return res.redirect('/hospital-officials/login');
+    }
+    const requests = await BloodRequest.findAll({ where: { hospital_id: official.hospital_id }, include: ['donation'] });
+    return res.render('blood-requests/index', { title: 'Blood Requests', requests: requests });
 }
 
 // returns single view of a resource

@@ -22,24 +22,33 @@
 
 <body class="container-fluid">
     <%- include('../partials/dashboard/header.ejs') %>
-
         <!-- <div class=""> -->
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/donation-requests">
-                                <span data-feather="download" class="align-text-bottom"></span>
-                                Donation Requests
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/donations">
-                                <span data-feather="upload" class="align-text-bottom"></span>
-                                Donations
-                            </a>
-                        </li>
+                        <% if (session.admin) { %>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/donation-requests">
+                                    <span data-feather="download" class="align-text-bottom"></span>
+                                    Donation Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/donations">
+                                    <span data-feather="upload" class="align-text-bottom"></span>
+                                    Donations
+                                </a>
+                            </li>
+                            <% } %>
+                            <% if (session.official) { %>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/blood-requests">
+                                        <span data-feather="upload" class="align-text-bottom"></span>
+                                        Blood Requests
+                                    </a>
+                                </li>
+                        <% } %>
                     </ul>
 <!-- 
                     <h6
