@@ -2,7 +2,11 @@ const { render } = require("ejs");
 const db = require("../database/models");
 const HospitalOfficial = db.HospitalOfficial;
 const Login = async (req, res, next) => {
-    // return res.send('Hospital Official Login');
+    if (req.session.official) {
+        return res.redirect('/blood-requests');
+    }
+    req.session.admin = null;
+    req.session.donor = null;
     return res.render('hospital-officials/login',
         {
             title: 'Hospital Official Login', official: {}, errors: [],

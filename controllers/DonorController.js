@@ -73,7 +73,8 @@ const Login = async (req, res, next) => {
     if (req.session.donor) {
         return res.redirect('/');
     }
-
+    req.session.admin = null;
+    req.session.official = null;
     return res.render('donors/login',
         {
             title: 'Donor Login',
