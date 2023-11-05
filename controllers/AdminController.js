@@ -28,7 +28,8 @@ const Login = async (req, res, next) => {
     if (req.session.admin) {
         return res.redirect('/');
     }
-
+    req.session.donor = null;
+    req.session.official = null;
     return res.render('admin/login',
         {
             title: 'Admin Login',
