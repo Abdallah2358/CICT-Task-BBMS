@@ -29,9 +29,9 @@
         <nav class="nav nav-masthead justify-content-center float-md-end">
           <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/">Home</a>
           <!-- <a class="nav-link fw-bold py-1 px-0" href="/donors/register">Donate</a> -->
-          <% if (donor) { %>
+          <% if (session.donor) { %>
             <p class="py-1 px-2">Welcome, <strong>
-                <%= donor.full_name.split(' ')[0] %></strong></p>
+                <%= session.donor.full_name.split(' ')[0] %></strong></p>
             <a class="nav-link fw-bold py-1 px-0" href="/donors/logout">Logout</a>
           <% } else { %>
             <a class="nav-link fw-bold py-1 px-0" href="/donors/login">Login</a>
@@ -46,7 +46,7 @@
       <p class="lead">This a blood bank management system used to help blood banks connect their systems to hospitals
         and donors to facilitate its operations.
       <p class="lead">
-        <a href="/donor/register" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Donate</a>
+        <a href="/donation-requests/create" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Donate</a>
       </p>
     </main>
 

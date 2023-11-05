@@ -3,15 +3,13 @@ const router = express.Router();
 const DRC = require('../controllers/DonationRequestController');
 const { checkSchema } = require('express-validator');
 router.use('/', (req, res, next) => {
-    if (!req.session.admin) {
+    if (!req.session.donor) {
         // Store the previous URL in the session
         req.session.oldUrl = req.originalUrl;
-        return res.redirect('/admin/login');
+        return res.redirect('/donors/login');
     }
     return next()
 });
-/* Get Register page. */
-router.get('/', DRC.index);
 router.get('/create', DRC.create);
 router.post('/create', checkSchema(
     {
@@ -26,7 +24,16 @@ router.post('/create', checkSchema(
         }
     }
 ), DRC.store);
-
+router.use('/', (req, res, next) => {
+    if (!req.session.admin) {
+        // Store the previous URL in the session
+        req.session.oldUrl = req.originalUrl;
+        return res.redirect('/admin/login');
+    }
+    return next()
+});
+/* Get Register page. */
+router.get('/', DRC.index);
 router.get('/:id', DRC.show);
 router.get('/:id/virus-test-result', DRC.get_test_result);
 router.post('/:id/virus-test-result', DRC.post_test_result);

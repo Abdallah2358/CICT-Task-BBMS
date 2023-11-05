@@ -1,14 +1,10 @@
 const db = require('../database/models');
 const { validationResult } = require('express-validator');
-const { transport, Cities, Blood_types } = require('../config');
+const { transport, Cities, Blood_types, hash } = require('../config');
 const app = require('../app');
 
 
-const { createHash } = require('crypto');
 
-function hash(string) {
-    return createHash('sha256').update(string).digest('hex');
-}
 
 const Donor = db.Donor;
 const DonationRequest = db.DonationRequest;
@@ -74,7 +70,6 @@ const Logout = async (req, res, next) => {
     return res.redirect('/');
 }
 const Login = async (req, res, next) => {
-    // res.send('aaa');
     if (req.session.donor) {
         return res.redirect('/');
     }
@@ -91,20 +86,22 @@ const PostLogin = async (req, res) => {
     let { email, password } = req.body;
     password = hash(password);
     const donor = await Donor.findOne({ where: { email: email, password: password } });
-    if (donor) {
-        req.session.donor = donor;
-        return res.redirect('/');
+
+    if (!donor) {
+        return res.render('donors/login',
+            {
+                title: 'Donor Register',
+                layout: './layouts/sign-in',
+                errors: [{ msg: "The email and password does not match" }], donor: {
+                    email: email,
+                    password: password
+                },
+            });
     }
-    return res.render('donors/login',
-        {
-            title: 'Donor Register',
-            layout: './layouts/sign-in',
-            errors: [{ msg: "The email and password does not match" }], donor: {
-                email: email,
-                password: password
-            },
-            // cities: cities, blood_types: blood_types
-        });
+    req.session.donor = donor;
+    const oldUrl = req.session.oldUrl || '/';
+    req.session.oldUrl = null;
+    return res.redirect(oldUrl);
 }
 module.exports = {
     show,
