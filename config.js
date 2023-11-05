@@ -15,11 +15,17 @@ const transport = nodemailer.createTransport({
         pass: process.env.MAIL_PASSWORD
     }
 });
+const { createHash } = require('crypto');
+
+const hash = (string) => {
+    return createHash('sha256').update(string).digest('hex');
+}
 module.exports = {
     transport: transport,
     endpoint: process.env.API_URL,
     masterKey: process.env.API_KEY,
     port: process.env.PORT,
     Cities: cities,
-    Blood_types: blood_types
+    Blood_types: blood_types,
+    hash: hash
 };
