@@ -96,13 +96,13 @@ const findNearestDonation = async (request, donations) => {
   let minDistance = Infinity;
   let nearestCity = null;
   for (const donation of donations) {
-    if (donation.blood_type_id === request.blood_type_id) {
-      const distance = calculateDistance(request.city, donation.city);
-      if (distance < minDistance) {
-        minDistance = distance;
-        nearestCity = donation.city;
-      }
+    //  if (donation.blood_type_id === request.blood_type_id) {
+    const distance = calculateDistance(request.city, donation.city);
+    if (distance < minDistance) {
+      minDistance = distance;
+      nearestCity = donation.city;
     }
+    // }
   }
   return { minDistance, nearestCity };
 }
@@ -114,12 +114,20 @@ const compareState = (state1, state2) => {
   };
   return StatusEnum[state1] === StatusEnum[state2];
 }
+
+// for simplicity this ignores the fact that some blood types can donate to other blood types
+// and some blood types can receive from other blood types 
+// this also ignores the fact that some blood types are more rare than others
+// and that some blood types are more common than others
 const handleRequests = async (request, options) => {
   const states = ['Immediate', 'Urgent', 'Normal'];
-  const unfulfilledRequestsCount = await db.BloodRequest.count({
-    where: { fulfilled: false }
-  });
-  const donationsInStockCount = await db.Donation.count({ where: { in_stock: true } });
+  const bloodTypesIds = [1, 2, 3, 4, 5, 6, 7, 8];
+  // start by just getting the count to see if we need to handle requests
+  // this saves some time since the count is much faster than the query
+  let unfulfilledRequestsCount = await db.BloodRequest
+    .count({ where: { fulfilled: false } });
+  let donationsInStockCount = await db.Donation
+    .count({ where: { in_stock: true } });
   // No need to handle requests if there are no unfulfilled requests
   // or if there are no donations in stock
   let stop = false;
@@ -134,18 +142,12 @@ const handleRequests = async (request, options) => {
     //     order: [['patient_state', 'ASC'], ['createdAt', 'ASC']],
     //     include: ['city']
     //   });
-    const donations = await db.Donation.findAll(
-      {
-        where: { in_stock: true },
-        order: [['createdAt', 'ASC']],
-        include: ['city']
-      });
 
     // this object defines the search radius for each state
     // we start with 25km for Immediate requests since it should be fulfilled
     // as soon as possible and we don't want to waste time searching for a match
     let distances = {
-      'Immediate': 25,
+      'Immediate': 30,
       'Urgent': 15,
       'Normal': 10
     };
@@ -153,62 +155,106 @@ const handleRequests = async (request, options) => {
     const radius = 100;
     // this constant defines how fast the search area expands
     const step = 10;
-    // depending on these 2 variables we can calculate how many times we need to loop
-    // through the donations array
-    // although the ideal case is having the largest radius
-    // with the smallest steps
-    // we can't do that because we don't have enough computing resources
-    // also if we make the step too small we might end up wasting the 
+    /* 
+    depending on these 2 variables we can calculate how many times we need to loop
+     through the donations array
+     although the ideal case is having the largest radius
+     with the smallest steps
+     we can't do that because we don't have enough computing resources
+     also if we make the step too small we might end up wasting the
+     */
+
 
     // save queried requests in this object so we don't have to query them again
     const requests = {};
+    /* 
+    get all the donations in system this is a heavy query
+     but we can assume that the donations are usually higher 
+     than the requests so we can save some time by querying them
+     all at once and this simplifies logic a bit
+     this makes multiple queries initially but should 
+     help reduce the overall time of handling requests 
+     */
+    const donations = [];
+    bloodTypesIds.array.forEach(async (element) => {
+      donations[element] = await db.Donation.findAll(
+        {
+          where: { in_stock: true, blood_type_id: element },
+          order: [['createdAt', 'ASC']],
+          include: ['city']
+        });
+      requests[element] = {};
+    });
 
-    while (donations.length && !stop && distances['Immediate'] < radius) {
-      states.forEach(async (state) => {
-        if (!requests[state]) {
-          requests[state] = await db.BloodRequest.count({
-            where: { fulfilled: false, patient_state: state },
-            order: [['patient_state', 'ASC'], ['createdAt', 'ASC']],
-            include: ['city']
-          });
-        }
+    // loop until we find a match or we reach the search radius
+    // we also stop if we find out that there is no donation with the needed blood type
+
+    /* another solution is to select each donation blood type and each */
+
+    while (donationsInStockCount && unfulfilledRequestsCount && distances['Immediate'] < radius) {
+      bloodTypesIds.forEach(async (blood_type_id) => {
+        // here we reset the flag to false since we are looping through the states again
+        // we want to make sure that if we go through the city match that the flag is false
+        // so that we avoid an edge case where we having the previous blood type match 
         let blood_type_exists = false;
-        for (const [i, req] of requests[state]) {
-          // check if there is any stock at same city
-          for (const [j, donation] of donations) {
-            const sameCity = req.city_id === donation.city_id;
-            const sameBloodType = req.blood_type_id === donation.blood_type_id;
-            if (sameCity && sameBloodType) {
-              await fulfillRequest(req, donation);
-              delete donations[j];
-              delete requests[state][i];
-              break;
-            }
-            //since we already checked all donations it is good to make
-            //sure that the blood type actually exists before continuing
-            if (sameBloodType) {
-              blood_type_exists = true;
+        states.forEach(async (state) => {
+          if (!requests[blood_type_id][state] && donations[blood_type_id].length) {
+            requests[blood_type_id][state] = await db.BloodRequest.findAll({
+              where: { fulfilled: false, patient_state: state, blood_type_id: blood_type_id },
+              order: [['patient_state', 'ASC'], ['createdAt', 'ASC']],
+              include: ['city']
+            });
+          }
+          if (
+            !requests[blood_type_id][state]
+            && !requests[blood_type_id][state].length
+            && donations[blood_type_id].length
+          ) {
+            for (const [i, req] of requests[blood_type_id][state]) {
+              // check if there is any stock at same city
+              for (const [j, donation] of donations[blood_type_id]) {
+                const sameCity = req.city_id === donation.city_id;
+                // const sameBloodType = req.blood_type_id === donation.blood_type_id;
+                if (sameCity) {
+                  await fulfillRequest(req, donation);
+                  donationsInStockCount--;
+                  unfulfilledRequestsCount--;
+                  delete donations[blood_type_id][j];
+                  delete requests[blood_type_id][state][i];
+                  break;
+                }
+                //since we already checked all donations it is good to make
+                //sure that the blood type actually exists before continuing
+                // since we break if there is a match we are sure if we reach here
+                // that there is no city match but that there is blood type match
+                blood_type_exists = true;
+              }
+              // before we continue we need to make sure that there is a blood type match
+              // so that we don't waste time searching 
+              if (blood_type_exists) {
+                const { minDistance, nearestCity } = findNearestDonation(req, donations);
+                // here we make sure that the nearest city is within the search radius
+                // and that the nearest city has the same blood type
+                if (minDistance < distances[state]) {
+                  const donationIndex = donations[blood_type_id].findIndex(d => d.city_id === nearestCity.id);
+                  await fulfillRequest(req, donations[blood_type_id][donationIndex]);
+                  donationsInStockCount--;
+                  unfulfilledRequestsCount--;
+                  delete donations[blood_type_id][donationIndex];
+                  delete requests[blood_type_id][state][i];
+                  if (donations[blood_type_id].length === 0) {
+                    blood_type_exists = false;
+                  }
+                }
+              }
             }
           }
-          if (blood_type_exists) {
-            const { minDistance, nearestCity } = findNearestDonation(req, donations);
-            // here we make sure that the nearest city is within the search radius
-            // and that the nearest city has the same blood type
-            if (minDistance < distances[state]) {
-              const donationIndex = donations.findIndex(d => d.city_id === nearestCity.id);
-              await fulfillRequest(req, donations[donationIndex]);
-              delete donations[donationIndex];
-              delete requests[state][i];
-              blood_type_exists = false;
-            }
-          }
-        }
-        // keep expanding the search radius by 10km until we find a match
-        // or we reach our limit of 100km 
-        // we made the limit at 100km because we assume that the hospital
-        distances[state] += step;
+          // keep expanding the search radius by 10km until we find a match
+          // or we reach our limit of 100km 
+          // we made the limit at 100km because we assume that the hospital
+          distances[state] += step;
+        });
       });
-
     }
   }
 }
